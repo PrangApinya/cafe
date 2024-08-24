@@ -11,10 +11,9 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 // เอาไว้เรียก api ย่อย จะเพิ่ม api เพิ่มตรงนี้
-app.use("/api/v1/rfid/", require("./api/api_rfid")); //เรียก ค่า rfid จาก nodered
+app.use("/api/v1/rfid/", require("./api_rfid")); //เรียก ค่า rfid จาก nodered
 app.use("/api/v1/employee/", require("./api_employee"));
-app.use("/api/v1/sss/", require("./api_sss"));
-
+app.use("/api/v1/buzzer/", require("./api_buzzer"));
 // run node
 app.listen(8085, () => {
     console.log("Backend is running...");

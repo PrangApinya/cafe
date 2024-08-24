@@ -4,9 +4,13 @@ const sequelize = require("../db_instance");
 
 const employee = sequelize.define("employee", {
     id: {
+        type: Sequelize.INTEGER,
+        primaryKey: true,
+        autoIncrement: true
+      },
+    rfid: {
         type: Sequelize.STRING,
-        allowNull: false,
-        primaryKey: true, 
+        allowNull: false
     },
     firstName: {
         type: Sequelize.STRING,
@@ -20,13 +24,14 @@ const employee = sequelize.define("employee", {
         type: Sequelize.STRING,
         allowNull: false,
     },
+    
     level: {
         type: Sequelize.STRING,
         defaultValue: "normal",
     },
 }, {
-    // Additional options if needed
-    timestamps: false // ปิดการใช้งานฟิลด์ createdAt และ updatedAt
+    
+    timestamps: false 
 });
 
 (async () => {

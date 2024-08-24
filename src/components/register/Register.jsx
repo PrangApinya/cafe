@@ -1,12 +1,16 @@
 import React, { useState } from 'react';
+import './Register.css'
 import { useNavigate } from 'react-router-dom';
 import Axios from 'axios';
 import WebSocketComponent from '../WebSocketComponent';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 const Register = () => {
     const navigate = useNavigate();
 
     const [formState, setFormState] = useState({
-        id: '',
+        rfid: '',
         firstName: '',  
         lastName: '',   
         password: ''
@@ -20,15 +24,38 @@ const Register = () => {
         });
     };
 
+    const handleWebSocketData = (data) => {
+        setFormState((prevState) => ({
+            ...prevState,
+            rfid: data 
+        }));
+    };
+
     const handleSubmit = (e) => {
         e.preventDefault();
-        Axios.post("http://localhost:8085/api/v1/employee/register", formState)
+        if (!formState.firstName || !formState.lastName || !formState.password || !formState.rfid) {
+            toast.error("กรุณากรอกข้อมูลให้ครบถ้วน");
+            return;
+        }
+        Axios.post("http://localhost:8085/api/v1/rfid/check-rfid", { rfid: formState.rfid })
             .then(response => {
-                alert(JSON.stringify(response.data));
+                if (response.data.exists) {
+                    toast.error("RFID นี้ถูกใช้ไปแล้ว กรุณาใช้บัตรอื่น",{ autoClose: 1000 });
+                } else {
+                    
+                    Axios.post("http://localhost:8085/api/v1/employee/register", formState)
+                        .then(response => {
+                            toast.success("ลงทะเบียนสำเร็จ",{ autoClose: 1000 });
+                        })
+                        .catch(error => {
+                            console.error("Error during registration:", error);
+                            toast.error("ลงทะเบียนไม่สำเร็จกรุณาลงใหม่",{ autoClose: 1000 });
+                        });
+                }
             })
             .catch(error => {
-                console.error("Error during registration:", error);
-                alert("Registration failed. Please try again.");
+                console.error("Error during RFID check:", error);
+                toast.alert("เกิดข้อผิดพลาดในการตรวจสอบ RFID");
             });
     };
 
@@ -38,11 +65,23 @@ const Register = () => {
 
     return (
         <div>
+            <div class="main">
             <form onSubmit={handleSubmit}>
-                <h1>Register</h1>
+                <h1>ลงทะเบียน</h1>
 
-                <WebSocketComponent />
-                <label htmlFor="firstname">First name:</label><br />
+                <WebSocketComponent onDataReceived={handleWebSocketData} />
+                
+                <label htmlFor="rfid">RFID:</label><br />
+                <input 
+                    type="text" 
+                    id="rfid" 
+                    name="rfid"
+                    value={formState.rfid} 
+                    onChange={handleChange} 
+                    readOnly 
+                /><br />
+
+                <label htmlFor="firstname">ชื่อ:</label><br />
                 <input 
                     type="text" 
                     id="firstname" 
@@ -50,7 +89,8 @@ const Register = () => {
                     value={formState.firstName} 
                     onChange={handleChange} 
                 /><br />
-                <label htmlFor="lastname">Last name:</label><br />
+                
+                <label htmlFor="lastname">นามสกุล:</label><br />
                 <input 
                     type="text" 
                     id="lastname" 
@@ -59,7 +99,7 @@ const Register = () => {
                     onChange={handleChange} 
                 /><br />
 
-                <label htmlFor="password">Password:</label><br />
+                <label htmlFor="password">รหัสผ่าน:</label><br />
                 <input 
                     type="password" 
                     id="password" 
@@ -67,12 +107,14 @@ const Register = () => {
                     value={formState.password} 
                     onChange={handleChange} 
                 /><br />
-                <button type="submit">Register</button>
+                
+                <button type="submit">ลงทะเบียน</button>
                 <br />
                 <button type="button" className="btn btn-light" onClick={handleLoginClick}>
-                    Go to login
+                    ไปที่เข้าสู่ระบบ
                 </button>
             </form>
+            </div>
         </div>
     );
 };

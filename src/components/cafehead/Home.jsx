@@ -1,17 +1,42 @@
-import React from 'react'
-import './Home.css'
+import React, { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import './Home.css';
+import WebSocketComponent from '../WebSocketComponent';
 
 const Home = () => {
-  return (
-    <div class="content">
-	<div class="circle"></div>
-	<div class="circle"></div>
-	<div class="circle"></div>
-	<div class="circle"></div>
-</div>
-   
-    
-  )
-}
+  const navigate = useNavigate();
 
-export default Home
+  const handleRfidData = (rfid) => {
+    fetch('http://localhost:8085/api/v1/rfid/check-rfid', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ rfid }), 
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.exists) {
+          navigate('/'); 
+        } else {
+          alert('RFID ไม่ถูกต้อง');
+        }
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+      });
+  };
+
+  return (
+    <div className="content">
+      <div className="circle"></div>
+      <div className="circle"></div>
+      <div className="circle"></div>
+      <div className="circle"></div>
+      
+      <WebSocketComponent onDataReceived={handleRfidData} />
+    </div>
+  );
+};
+
+export default Home;
