@@ -30,7 +30,7 @@ const Pageice = () => {
                             <div class="card" >
                             <img src={capoice} class="card-img-top" height="170"/>
                             <div class="card-body">
-                                <h5 class="card-title text-center">Cabuchino</h5>
+                                <h5 class="card-title text-center">Cappuccino</h5>
                                 <h5 class="card-title text-center">50THB</h5>
                                 <div class="d-flex justify-content-center">
                                 <a href="#" class="btn btn-primary ">Check out</a>
