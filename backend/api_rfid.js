@@ -1,7 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const Employee = require("./models/employee");
-
+const Staff = require("./models/staff_model")
 router.post("/", (req, res) => {
     const rfidData = req.body.rfidData;
     const timestamp = new Date();
@@ -15,9 +14,9 @@ router.post("/", (req, res) => {
 
 router.post("/check-rfid", async (req, res) => {
     const { rfid } = req.body;
-    const employee = await Employee.findOne({ where: { rfid } });
+    const Staff = await Staff.findOne({ where: { rfid } });
     
-    if (employee) {
+    if (Staff) {
         return res.status(200).json({ exists: true });
     } else {
         return res.status(200).json({ exists: false });
