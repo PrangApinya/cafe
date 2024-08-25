@@ -37,13 +37,13 @@ const Register = () => {
             toast.error("กรุณากรอกข้อมูลให้ครบถ้วน");
             return;
         }
-        Axios.post("http://localhost:8085/api/v1/rfid/check-rfid", { rfid: formState.rfid })
+        Axios.post("http://localhost:8085/apis/rfid/check-rfid", { rfid: formState.rfid })
             .then(response => {
                 if (response.data.exists) {
                     toast.error("RFID นี้ถูกใช้ไปแล้ว กรุณาใช้บัตรอื่น",{ autoClose: 1000 });
                 } else {
                     
-                    Axios.post("http://localhost:8085/api/v1/employee/register", formState)
+                    Axios.post("http://localhost:8085/staffs/register", formState)
                         .then(response => {
                             toast.success("ลงทะเบียนสำเร็จ",{ autoClose: 1000 });
                         })

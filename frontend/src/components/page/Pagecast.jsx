@@ -10,7 +10,6 @@ const Pagecast = () => {
                     <div class="boxcast">  
                         <p>My Cast</p>
                         <p>สินค้าในตะกร้า :0</p>
-
                     </div>
                 
                 </div>
