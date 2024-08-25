@@ -10,11 +10,11 @@ const Check = sequelize.define("check", {
         allowNull: false,
     },
     staff_id: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.STRING,
         allowNull: false,
         references: {
             model: "staff",
-            key: "id",
+            key: "rfid",
         }
     },
     date: {

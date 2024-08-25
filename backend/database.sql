@@ -1,12 +1,4 @@
 BEGIN TRANSACTION;
-DROP TABLE IF EXISTS "menus";
-CREATE TABLE IF NOT EXISTS "menus" (
-	"id"	INTEGER NOT NULL,
-	"name"	TEXT NOT NULL,
-	"price"	REAL NOT NULL,
-	"type"	TEXT,
-	PRIMARY KEY("id" AUTOINCREMENT)
-);
 DROP TABLE IF EXISTS "receipts";
 CREATE TABLE IF NOT EXISTS "receipts" (
 	"id"	INTEGER NOT NULL,
@@ -19,21 +11,29 @@ CREATE TABLE IF NOT EXISTS "receipts" (
 );
 DROP TABLE IF EXISTS "staffs";
 CREATE TABLE IF NOT EXISTS "staffs" (
-	"id"	INTEGER NOT NULL,
+	"rfid"	TEXT NOT NULL,
 	"firstname"	TEXT NOT NULL,
 	"lastname"	TEXT NOT NULL,
 	"password"	TEXT NOT NULL,
 	"is_admin"	NUMERIC NOT NULL,
-	PRIMARY KEY("id" AUTOINCREMENT)
+	PRIMARY KEY("rfid")
 );
 DROP TABLE IF EXISTS "checks";
 CREATE TABLE IF NOT EXISTS "checks" (
 	"id"	INTEGER NOT NULL,
-	"staff_id"	INTEGER NOT NULL,
+	"staff_id"	TEXT NOT NULL,
 	"date"	TEXT NOT NULL,
 	"datetime"	TEXT NOT NULL,
 	PRIMARY KEY("id" AUTOINCREMENT),
-	FOREIGN KEY("staff_id") REFERENCES "staffs"("id")
+	FOREIGN KEY("staff_id") REFERENCES "staffs"("rfid")
+);
+DROP TABLE IF EXISTS "menus";
+CREATE TABLE IF NOT EXISTS "menus" (
+	"id"	INTEGER NOT NULL,
+	"name"	TEXT NOT NULL,
+	"price"	REAL NOT NULL,
+	"type"	TEXT NOT NULL,
+	PRIMARY KEY("id" AUTOINCREMENT)
 );
 INSERT INTO "menus" ("id","name","price","type") VALUES (1,'Latte',40.0,'HOT'),
  (2,'Cabuchino',45.0,'HOT'),
@@ -47,5 +47,4 @@ INSERT INTO "menus" ("id","name","price","type") VALUES (1,'Latte',40.0,'HOT'),
  (10,'Green Tea',55.0,'CAKE'),
  (11,'Strawberry',55.0,'CAKE'),
  (12,'Macaron',70.0,'CAKE');
-INSERT INTO "staffs" ("id","firstname","lastname","password","is_admin") VALUES (1,'Carl','Johnson','abc',1);
 COMMIT;

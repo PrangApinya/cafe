@@ -19,7 +19,7 @@ app.use("/staffs", admin, require("./apis/staff_api"));
 app.use("/order", require("./apis/order_api"));
 app.use("/receipts", require("./apis/receipt_api"));
 app.use("/api/v1/sss/", require("./api_sss"));
-
+app.use("/api/v1/buzzer/", require("./api_buzzer"));
 // run node
 app.listen(8085, () => {
     console.log("Backend is running...");

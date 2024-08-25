@@ -3,10 +3,9 @@ const Sequelize = require("sequelize");
 const sequelize = require("../db_instance");
 
 const Staff = sequelize.define("staff", {
-    id: {
-        type: Sequelize.INTEGER,
+    rfid: {
+        type: Sequelize.STRING,
         primaryKey: true,
-        autoIncrement: true,
         allowNull: false,
     },
     firstname: {
@@ -27,8 +26,7 @@ const Staff = sequelize.define("staff", {
         allowNull: false,
     },
 }, {
-    // Additional options if needed
-    timestamps: false // ปิดการใช้งานฟิลด์ createdAt และ updatedAt
+    timestamps: false 
 });
 
 (async () => {

@@ -30,7 +30,7 @@ const Pagehot = () => {
                                 <div class="card" >
                                     <img src={capo} class="card-img-top" height="150" />
                                     <div class="card-body">
-                                        <h5 class="card-title text-center">Cabuchino</h5>
+                                        <h5 class="card-title text-center">Cappuccino</h5>
                                         <h5 class="card-title text-center">45THB</h5>
                                         <div class="d-flex justify-content-center">
                                             <a href="#" class="btn btn-primary ">Check out</a>
@@ -54,7 +54,7 @@ const Pagehot = () => {
 
                             <div class="col-sm-4">
                                 <div class="card" >
-                                    <img src={teat} class="card-img-top"  />
+                                    <img src={teat} class="card-img-top" height="150" />
                                     <div class="card-body">
                                         <h5 class="card-title text-center">thai tea</h5>
                                         <h5 class="card-title text-center">30THB</h5>
