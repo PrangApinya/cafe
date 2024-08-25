@@ -1,20 +1,28 @@
-const express = require("express");
-const router = express.Router()
-const Gpio = require('onoff').Gpio; // เรียกใช้ไลบรารี onoff
-const buzzer = new Gpio(18, 'out'); // กำหนด GPIO pin 18 ให้เป็น output สำหรับ Buzzer
-router.post('/buzz', (req, res) => {
-    // เปิด buzzer
-    buzzer.writeSync(1); 
-    
-    // ปิด buzzer หลังจาก 1 วินาที (1000 มิลลิวินาที)
-    setTimeout(() => {
-      buzzer.writeSync(0); 
-    }, 1000);
-  
-    res.send('Buzzer activated');
+const { exec } = require('child_process');
+
+// ฟังก์ชันเปิด Buzzer
+const turnBuzzerOn = (req, res) => {
+  exec('python3 /path/to/buzzer_control.py on', (error, stdout, stderr) => {
+    if (error) {
+      console.error(`Error turning on buzzer: ${error}`);
+      return res.status(500).send('Error turning on buzzer');
+    }
+    res.send('Buzzer turned on');
   });
+};
 
+// ฟังก์ชันปิด Buzzer
+const turnBuzzerOff = (req, res) => {
+  exec('python3 /path/to/buzzer_control.py off', (error, stdout, stderr) => {
+    if (error) {
+      console.error(`Error turning off buzzer: ${error}`);
+      return res.status(500).send('Error turning off buzzer');
+    }
+    res.send('Buzzer turned off');
+  });
+};
 
-
-
-module.exports = router;
+module.exports = {
+  turnBuzzerOn,
+  turnBuzzerOff
+};
