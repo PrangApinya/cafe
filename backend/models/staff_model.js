@@ -2,17 +2,18 @@
 const Sequelize = require("sequelize");
 const sequelize = require("../db_instance");
 
-const employee = sequelize.define("employee", {
+const Staff = sequelize.define("staff", {
     id: {
-        type: Sequelize.STRING,
-        allowNull: false,
-        primaryKey: true, 
-    },
-    firstName: {
-        type: Sequelize.STRING,
+        type: Sequelize.INTEGER,
+        primaryKey: true,
+        autoIncrement: true,
         allowNull: false,
     },
-    lastName: {
+    firstname: {
+        type: Sequelize.STRING,
+        allowNull: false,
+    },
+    lastname: {
         type: Sequelize.STRING,
         allowNull: false,
     },
@@ -20,9 +21,10 @@ const employee = sequelize.define("employee", {
         type: Sequelize.STRING,
         allowNull: false,
     },
-    level: {
-        type: Sequelize.STRING,
-        defaultValue: "normal",
+    is_admin: {
+        type: Sequelize.BOOLEAN,
+        defaultValue: 0,
+        allowNull: false,
     },
 }, {
     // Additional options if needed
@@ -30,7 +32,7 @@ const employee = sequelize.define("employee", {
 });
 
 (async () => {
-    await employee.sync({ force: false });
+    await Staff.sync({ force: false });
 })();
 
-module.exports = employee;
+module.exports = Staff;
