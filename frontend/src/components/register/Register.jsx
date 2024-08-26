@@ -78,7 +78,7 @@ const Register = () => {
                     name="rfid"
                     value={formState.rfid} 
                     onChange={handleChange} 
-                    readOnly 
+                    //readOnly 
                 /><br />
 
                 <label htmlFor="firstname">ชื่อ:</label><br />

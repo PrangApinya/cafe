@@ -1,21 +1,59 @@
-// src/components/Login.jsx
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-const Login = () => {
-    const navigate = useNavigate();
+const Home = () => {
+  const navigate = useNavigate();
+  const [rfid, setRfid] = useState('');
 
-    const handleRegisterClick = () => {
-        navigate('/Home'); 
-    };
+  // ฟังก์ชันเพื่อจัดการการเปลี่ยนแปลงค่าใน input
+  const handleChange = (e) => {
+    setRfid(e.target.value);
+  };
 
-    return (
+  // ฟังก์ชันเพื่อจัดการการส่งข้อมูลเมื่อคลิกที่ปุ่มส่ง
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    fetch('http://localhost:8085/rfid/check-rfid', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ rfid }), 
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.exists) {
+          navigate('/register'); 
+        } else {
+          alert('RFID ไม่ถูกต้อง');
+        }
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+      });
+  };
+
+  return (
+    <header>
+      <form onSubmit={handleSubmit}>
         <div>
-                <button type="button" className="btn btn-light" onClick={handleRegisterClick}>
-                    Tap Here to Start
-                </button>
+          <label htmlFor="rfid">RFID:</label>
+          <input 
+            type="text" 
+            id="rfid" 
+            name="rfid" 
+            value={rfid} 
+            onChange={handleChange} 
+            required 
+          />
         </div>
-    );
+        <button type="submit">ตรวจสอบ RFID</button>
+      </form>
+      <div className="content">
+      </div>
+    </header>
+  );
 };
 
-export default Login;
+export default Home;

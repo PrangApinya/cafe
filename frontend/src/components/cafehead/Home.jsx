@@ -17,7 +17,7 @@ const Home = () => {
       .then((response) => response.json())
       .then((data) => {
         if (data.exists) {
-          navigate('/'); 
+          navigate('/register'); 
         } else {
           alert('RFID ไม่ถูกต้อง');
         }
