@@ -10,7 +10,7 @@ router.post("/register", async (req, res) => {
         
         const staff = await Staff.create(
             {
-                rfid: rfid,
+                rfid:rfid,
                 firstname: firstname,
                 lastname: lastname,
                 password: password,
