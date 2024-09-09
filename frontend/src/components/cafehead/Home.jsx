@@ -7,7 +7,7 @@ const Home = () => {
   const navigate = useNavigate();
 
   const handleRfidData = (rfid) => {
-    fetch('http://localhost:8085/api/v1/rfid/check-rfid', {
+    fetch('http://localhost:8085/rfid/check-rfid', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -17,7 +17,7 @@ const Home = () => {
       .then((response) => response.json())
       .then((data) => {
         if (data.exists) {
-          navigate('/'); 
+          navigate('/register'); 
         } else {
           alert('RFID ไม่ถูกต้อง');
         }
@@ -28,14 +28,14 @@ const Home = () => {
   };
 
   return (
+    <header>
     <div className="content">
       <div className="circle"></div>
       <div className="circle"></div>
       <div className="circle"></div>
       <div className="circle"></div>
-      
-      <WebSocketComponent onDataReceived={handleRfidData} />
     </div>
+    </header>
   );
 };
 

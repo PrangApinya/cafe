@@ -11,8 +11,8 @@ const Register = () => {
 
     const [formState, setFormState] = useState({
         rfid: '',
-        firstName: '',  
-        lastName: '',   
+        firstname: '',  
+        lastname: '',   
         password: ''
     });
 
@@ -33,17 +33,17 @@ const Register = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        if (!formState.firstName || !formState.lastName || !formState.password || !formState.rfid) {
+        if (!formState.firstname || !formState.lastname || !formState.password || !formState.rfid) {
             toast.error("กรุณากรอกข้อมูลให้ครบถ้วน");
             return;
         }
-        Axios.post("http://localhost:8085/api/v1/rfid/check-rfid", { rfid: formState.rfid })
+        Axios.post("http://localhost:8085/rfid/check-rfid", { rfid: formState.rfid })
             .then(response => {
-                if (response.data.exists) {
+        if (response.data.exists) {
                     toast.error("RFID นี้ถูกใช้ไปแล้ว กรุณาใช้บัตรอื่น",{ autoClose: 1000 });
                 } else {
                     
-                    Axios.post("http://localhost:8085/api/v1/employee/register", formState)
+                    Axios.post("http://localhost:8085/staffs/register", formState)
                         .then(response => {
                             toast.success("ลงทะเบียนสำเร็จ",{ autoClose: 1000 });
                         })
@@ -55,7 +55,7 @@ const Register = () => {
             })
             .catch(error => {
                 console.error("Error during RFID check:", error);
-                toast.alert("เกิดข้อผิดพลาดในการตรวจสอบ RFID");
+                toast.error("เกิดข้อผิดพลาดในการตรวจสอบ RFID");
             });
     };
 
@@ -78,15 +78,15 @@ const Register = () => {
                     name="rfid"
                     value={formState.rfid} 
                     onChange={handleChange} 
-                    readOnly 
+                    //readOnly 
                 /><br />
 
                 <label htmlFor="firstname">ชื่อ:</label><br />
                 <input 
                     type="text" 
                     id="firstname" 
-                    name="firstName"
-                    value={formState.firstName} 
+                    name="firstname"
+                    value={formState.firstname} 
                     onChange={handleChange} 
                 /><br />
                 
@@ -94,8 +94,8 @@ const Register = () => {
                 <input 
                     type="text" 
                     id="lastname" 
-                    name="lastName" 
-                    value={formState.lastName} 
+                    name="lastname" 
+                    value={formState.lastname} 
                     onChange={handleChange} 
                 /><br />
 

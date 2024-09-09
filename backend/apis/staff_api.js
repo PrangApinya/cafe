@@ -4,12 +4,13 @@ const Staff = require("../models/staff_model");
 const Check = require("../models/check_model");
 
 // Add new staff to the system
-router.post("/", async (req, res) => {
+router.post("/register", async (req, res) => {
     try {
-        const { firstname , lastname, password } = req.body;
+        const { rfid,firstname , lastname, password } = req.body;
         
         const staff = await Staff.create(
             {
+                rfid:rfid,
                 firstname: firstname,
                 lastname: lastname,
                 password: password,

@@ -8,9 +8,8 @@ const Pagecast = () => {
         <Cafe/>
             <div class="box2">
                     <div class="boxcast">  
-                        <p>My Cast</p>
+                        <p>My Cart</p>
                         <p>สินค้าในตะกร้า :0</p>
-
                     </div>
                 
                 </div>

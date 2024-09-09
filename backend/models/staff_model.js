@@ -5,8 +5,8 @@ const sequelize = require("../db_instance");
 const Staff = sequelize.define("staff", {
     rfid: {
         type: Sequelize.STRING,
-        primaryKey: true,
         allowNull: false,
+        primaryKey: true,
     },
     firstname: {
         type: Sequelize.STRING,
@@ -22,7 +22,7 @@ const Staff = sequelize.define("staff", {
     },
     is_admin: {
         type: Sequelize.BOOLEAN,
-        defaultValue: 0,
+        defaultValue: false,
         allowNull: false,
     },
 }, {
