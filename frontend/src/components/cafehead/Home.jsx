@@ -29,7 +29,6 @@ const Home = () => {
 
   return (
     <header>
-      <WebSocketComponent onDataReceived={handleRfidData} />
     <div className="content">
       <div className="circle"></div>
       <div className="circle"></div>
