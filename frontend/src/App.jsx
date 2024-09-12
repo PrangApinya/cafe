@@ -14,7 +14,6 @@ import Home from './components/cafehead/Home';
 import Login from './components/login/Login';
 
 function App() {
-
   return (
     <Router>
       <Routes>
