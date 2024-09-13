@@ -1,4 +1,5 @@
 const express = require("express");
+const bcrypt = require("bcryptjs");
 const router = express.Router();
 const Staff = require("../models/staff_model");
 const Check = require("../models/check_model");
@@ -7,13 +8,36 @@ const Check = require("../models/check_model");
 router.post("/register", async (req, res) => {
     try {
         const { rfid,firstname , lastname, password } = req.body;
+
+        const sanitizedRfid = rfid.trim();
+        const sanitizedFirstname = firstname.trim();
+        const sanitizedLastname = lastname.trim();
+        const sanitizedPassword = password.trim();
+
+        if (sanitizedRfid === "" || sanitizedFirstname === "" || sanitizedLastname === "" || sanitizedPassword === "") {
+            return res.status(400).json({ message: "Please fill all the fields" });
+        }
+
+        if(sanitizedRfid.length != 8) {
+            return res.status(400).json({ message: "RFID must be 8 characters long" });
+        }
+
+        if(sanitizedPassword.length < 8 || sanitizedPassword.length > 16) {
+            return res.status(400).json({ message: "Password must between 8 to 16 characters long" });
+        }
+
+        if(sanitizedFirstname.length < 2 || sanitizedFirstname.length > 20 || sanitizedLastname.length < 2 || sanitizedLastname.length > 20) {
+            return res.status(400).json({ message: "First name and last name must be between 2 to 20 characters long" });
+        }
+
+        const hashedPassword = bcrypt.hash(sanitizedPassword, 10);
         
         const staff = await Staff.create(
             {
-                rfid:rfid,
-                firstname: firstname,
-                lastname: lastname,
-                password: password,
+                rfid:sanitizedRfid,
+                firstname: sanitizedFirstname,
+                lastname: sanitizedLastname,
+                password: hashedPassword,
             }
         );
         staff.save();
