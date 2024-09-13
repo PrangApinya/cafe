@@ -18,14 +18,13 @@ function App() {
     <Router>
       <Routes>
         <Route path="/" element={<Pagehot />} />
-        <Route path='/home' element={<Home/>} ></Route>
+        <Route path='/home' element={<Home/>} /> 
         <Route path="/ice" element={<Pageice />} />
         <Route path="/cake" element={<Pagecake />} />
         <Route path="/cast" element={<Pagecast />} />
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login/>}/>
-        
-        <Route path="/dashboard" element={<PageDashboard />} />
+        <Route path="/dashboard" element={<PageDashboard/>} />
       </Routes>
     </Router>
 
