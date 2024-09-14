@@ -18,7 +18,16 @@ app.use("/menu", require("./apis/menu_api"));
 app.use("/staffs", /*admin,*/ require("./apis/staff_api"));
 app.use("/order", require("./apis/order_api"));
 app.use("/receipts", require("./apis/receipt_api"));
-app.use("/buzzer",require("./apis/buzzer_api"))
+
+app.get('/api/buzzer', (req, res) => {
+    exec('python3 /home/watchaphon/cafe/backend/buzzer_control.py on', (error, stdout, stderr) => {
+      if (error) {
+        console.error(`Error: ${error.message}`);
+        return res.status(500).send('Error triggering buzzer');
+      }
+      res.send('Buzzer triggered successfully');
+    });
+  });
 
 // run node
 app.listen(8085, () => {
