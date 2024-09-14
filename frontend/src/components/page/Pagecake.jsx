@@ -16,52 +16,44 @@ const Pagecake = () => {
                     <div class="row"> 
                     <div class="col-sm-4 ">
                         <div class="card" >
-                        <img src={cakec} class="card-img-top" height="150"/>
+                        <img src={cakec} class="card-img-top"  width="160" height="150"/>
                         <div class="card-body">
-                            <h5 class="card-title text-center">Chocolate </h5>
-                            <h5 class="card-title text-center">50THB</h5>
-                            <div class="d-flex justify-content-center">
-                            <a href="#" class="btn btn-primary ">Check out</a>
-                            </div>
+                            <h4>Chocolate </h4>
+                            <h5>50THB</h5>
+                            <button class="btn btn-primary" onclick="window.location.href='#';">Check out</button>
                         </div>
                         </div>
                     </div>
 
                     <div class="col-sm-4">
                         <div class="card" >
-                        <img src={caketea} class="card-img-top" height="150"/>
+                        <img src={caketea} class="card-img-top"width="160" height="150"/>
                         <div class="card-body">
-                            <h5 class="card-title text-center">Green Tea </h5>
-                            <h5 class="card-title text-center">55THB</h5>
-                            <div class="d-flex justify-content-center">
-                            <a href="#" class="btn btn-primary ">Check out</a>
-                            </div>
+                            <h4>Green Tea </h4>
+                            <h5>55THB</h5>
+                            <button class="btn btn-primary" onclick="window.location.href='#';">Check out</button>
                         </div>
                         </div>
                     </div>
 
                     <div class="col-sm-4">
                     <div class="card" >
-                        <img src={cakes} class="card-img-top" width="60" height="150"/>
+                        <img src={cakes} class="card-img-top" width="170" height="150"/>
                         <div class="card-body">
-                            <h5 class="card-title text-center">Strawberry </h5>
-                            <h5 class="card-title text-center">55THB</h5>
-                            <div class="d-flex justify-content-center">
-                            <a href="#" class="btn btn-primary ">Check out</a>
-                            </div>
+                            <h4>Strawberry </h4>
+                            <h5>55THB</h5>
+                            <button class="btn btn-primary" onclick="window.location.href='#';">Check out</button>
                         </div>
                         </div>
                     </div>
 
                     <div class="col-sm-4">
                     <div class="card" >
-                        <img src={cakem} class="card-img-top" height="150"/>
+                        <img src={cakem} class="card-img-top" width="170" height="150"/>
                         <div class="card-body">
-                            <h5 class="card-title text-center">Macaron</h5>
-                            <h5 class="card-title text-center">70THB</h5>
-                            <div class="d-flex justify-content-center">
-                            <a href="#" class="btn btn-primary ">Check out</a>
-                            </div>
+                            <h4>Macaron</h4>
+                            <h5>70THB</h5>
+                            <button class="btn btn-primary" onclick="window.location.href='#';">Check out</button>
                         </div>
                         </div>
                     </div>
