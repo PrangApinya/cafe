@@ -1,6 +1,6 @@
 const express = require("express");
 const cors = require("cors"); // นำเข้า cors
-
+const { exec } = require('child_process');
 const app = express();
 
 app.use(cors()); // ใช้งาน cors
@@ -18,6 +18,16 @@ app.use("/menu", require("./apis/menu_api"));
 app.use("/staffs", /*admin,*/ require("./apis/staff_api"));
 app.use("/order", require("./apis/order_api"));
 app.use("/receipts", require("./apis/receipt_api"));
+
+app.get('/api/buzzer', (req, res) => {
+    exec('python3 /home/watchaphon/buzzer_control.py', (error, stdout, stderr) => {
+      if (error) {
+        console.error(`Error: ${error.message}`);
+        return res.status(500).send('Error triggering buzzer');
+      }
+      res.send('Buzzer triggered successfully');
+    });
+  });
 
 // run node
 app.listen(8085, () => {

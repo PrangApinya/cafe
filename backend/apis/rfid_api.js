@@ -19,8 +19,14 @@ router.post("/check-rfid", async (req, res) => {
     try {
         const { rfid } = req.body;
 
-        if (!rfid) {
-            return res.status(400).json({ success: false, message: "RFID is required" });
+        const sanitizedRfid = rfid.trim();
+
+        if (sanitizedRfid === "") {
+            return res.status(400).json({ message: "RFID is required" });
+        }
+
+        if (sanitizedRfid.length !== 8) {
+            return res.status(400).json({ message: "RFID must be 8 characters long" });
         }
 
         const staff = await Staff.findOne({ where: { rfid } });
@@ -32,7 +38,7 @@ router.post("/check-rfid", async (req, res) => {
         }
     } catch (error) {
         console.error("Error checking RFID:", error);
-        return res.status(500).json({ success: false, message: "Internal server error" });
+        return res.status(500).json({ message: "Internal server error" });
     }
 });
 
