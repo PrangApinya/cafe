@@ -8,7 +8,7 @@ const Pagecast = () => {
   const handlePurchase = async () => {
     try {
       // เรียก API ที่ไปสั่งการ Raspberry Pi
-      await axios.get('http://localhost:8085/buzzer/on'); // แก้ URL ให้ตรงกับ API ที่เรียกไฟล์ Python บน Raspberry Pi
+      await axios.get('http://localhost:8085/api/buzzer'); // แก้ URL ให้ตรงกับ API ที่เรียกไฟล์ Python บน Raspberry Pi
       alert('สั่งซื้อสำเร็จและสั่ง Buzzer เรียบร้อยแล้ว!');
     } catch (error) {
       console.error('Error triggering buzzer:', error);
