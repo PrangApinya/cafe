@@ -39,23 +39,32 @@ const Register = () => {
         }
         Axios.post("http://localhost:8085/rfid/check-rfid", { rfid: formState.rfid })
             .then(response => {
-        if (response.data.exists) {
+                if (response.data.exists) {
+                    console.error("RFID already exists:", formState.rfid);
                     toast.error("RFID นี้ถูกใช้ไปแล้ว กรุณาใช้บัตรอื่น",{ autoClose: 1000 });
+                    return;
                 } else {
                     
                     Axios.post("http://localhost:8085/staffs/register", formState)
                         .then(response => {
+                            if (response.status !== 201) {
+                                console.error("Error during registration:", response.data.message);
+                                toast.error("เกิดข้อผิดพลาดในการลงทะเบียนกรุณาลงทะเบียนใหม่",{ autoClose: 1000 });
+                                return;
+                            }
                             toast.success("ลงทะเบียนสำเร็จ",{ autoClose: 1000 });
                         })
                         .catch(error => {
                             console.error("Error during registration:", error);
                             toast.error("ลงทะเบียนไม่สำเร็จกรุณาลงใหม่",{ autoClose: 1000 });
+                            return;
                         });
                 }
             })
             .catch(error => {
                 console.error("Error during RFID check:", error);
                 toast.error("เกิดข้อผิดพลาดในการตรวจสอบ RFID");
+                return;
             });
     };
 
@@ -65,7 +74,7 @@ const Register = () => {
 
     return (
         <div>
-            <div class="main">
+            <div className="main">
             <form onSubmit={handleSubmit}>
                 <h1>ลงทะเบียน</h1>
 

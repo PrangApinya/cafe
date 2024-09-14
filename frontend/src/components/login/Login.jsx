@@ -43,7 +43,10 @@ const Home = () => {
             type="text" 
             id="rfid" 
             name="rfid" 
-            value={rfid} 
+            value={rfid}
+            minLength={8}
+            maxLength={8}
+            autoFocus
             onChange={handleChange} 
             required 
           />
