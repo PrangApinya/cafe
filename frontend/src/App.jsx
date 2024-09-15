@@ -12,6 +12,7 @@ import PageDashboard from './components/page/PageDashboard';
 import Register from './components/register/Register';
 import Home from './components/cafehead/Home';
 import Login from './components/login/Login';
+import Pagestaff from './components/page/Pagestaff';
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login/>}/>
         <Route path="/dashboard" element={<PageDashboard/>} />
+        <Route path="/staff" element={<Pagestaff/>} />
       </Routes>
     </Router>
 
