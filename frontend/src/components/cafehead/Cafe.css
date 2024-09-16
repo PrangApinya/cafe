@@ -1,8 +1,9 @@
 
  header .navigation{
    position: relative;
-
 }
+
+
 
 .image{
    position: absolute;
@@ -13,14 +14,14 @@
    background-position:center;
    background-repeat:no-repeat;
    width: 100%;
-   height: 400px;   
+   height: 370px;   
 }
 .box{
    background-color: #ffb56c;
    width:100%;
-   height: 90px;
+   height: 70px;
    position: relative;
-   top: 280px;
+   top: 300px;
 }
 .boximg{
     position: relative;

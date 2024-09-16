@@ -41,7 +41,7 @@ const Pagehot = () => {
                                 <div class="card-body">
                                     <h4>Green tea</h4>
                                     <h5>30THB</h5>
-                                    <button class=".card-body" onclick="window.location.href='#';">Check out</button>
+                                    <button class="btn btn-primary" onclick="window.location.href='#';">Check out</button>
                                 </div>
                             </div>
                         </div>

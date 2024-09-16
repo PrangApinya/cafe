@@ -7,17 +7,21 @@ import cake from '../../assets/img/cake.png'
 import harvest from '../../assets/img/harvest.png'
 
 const Cafe = () => {
+ 
+ 
+  
   return (
     <header>
-      <div class="navigation">
      
-            
-             
+      <div class="navigation">
+       
         <div class="image">
-        </div> 
+  
            </div>
+           </div> 
+           
 
-           <div class="box">
+          <div class="box">
           <div class="boximg">
             <a href="/"><img src={coffeecup} alt="" width="60" height="60" /></a>
             <a href="/ice"><img src={icedcoffee} alt="" width="60" height="60" /></a>
@@ -25,6 +29,7 @@ const Cafe = () => {
             <a href="cast"><img src={harvest} alt="" width="60" height="60" /></a>
           </div>
           </div>
+  
          </header>
 
         )
