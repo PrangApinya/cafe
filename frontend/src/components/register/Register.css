@@ -1,7 +1,9 @@
 .main{
     position: relative;
     top: 100px;
-    width: 100%;
-    text-align: center;
+    left: 45%;
+    width: 25%;
+    text-align: left;
     font-size: 18px;
+    
 }

@@ -24,8 +24,8 @@ const Cafe = () => {
   <div id="myNav" className="overlay">
     <a href="javascript:void(0)" className="closebtn" onClick={closeNav}>×</a>
     <div className="overlay-content">
-      <a href="#">DASHBOARD</a>
-      <a href="#">STAFF</a>
+      <a href="/dashboard">DASHBOARD</a>
+      <a href="/staff">STAFF</a>
      
     </div>
   </div>
