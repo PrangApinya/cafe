@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import WebSocketComponent from '../WebSocketComponent';
-import './Login.css'; // Import the updated CSS file
+import './Login.css';
 
 const Login = () => {
   const navigate = useNavigate();
@@ -24,7 +24,22 @@ const Login = () => {
       .then((response) => response.json())
       .then((data) => {
         if (data.exists) {
-          navigate('/'); 
+          // Record check-in data
+          fetch('http://localhost:8085/check/check-in', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ rfid }), 
+          })
+            .then((response) => response.json())
+            .then((data) => {
+              console.log(data.message); // Log check-in success message
+              navigate('/'); 
+            })
+            .catch((error) => {
+              console.error('Error recording check-in:', error);
+            });
         } else {
           alert('RFID ไม่ถูกต้อง');
         }
@@ -45,7 +60,22 @@ const Login = () => {
       .then((response) => response.json())
       .then((data) => {
         if (data.exists) {
-          navigate('/'); 
+          // Record check-in data
+          fetch('http://localhost:8085/check/check-in', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ rfid }), 
+          })
+            .then((response) => response.json())
+            .then((data) => {
+              console.log(data.message); // Log check-in success message
+              navigate('/'); 
+            })
+            .catch((error) => {
+              console.error('Error recording check-in:', error);
+            });
         } else {
           alert('RFID ไม่ถูกต้อง');
         }
@@ -54,12 +84,6 @@ const Login = () => {
         console.error('Error:', error);
       });
   };
-
-  useEffect(() => {
-    return () => {
-      
-    };
-  }, []);
 
   return (
     <header className="login-header">
