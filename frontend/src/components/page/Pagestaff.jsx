@@ -84,6 +84,7 @@ const Pagestaff = () => {
       return;
     }
 
+    
     try {
       await axios.put(`http://localhost:8085/staffs/${editId}`, newData);
       fetchStaffs();
