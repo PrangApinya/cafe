@@ -17,7 +17,7 @@ const Home = () => {
       .then((response) => response.json())
       .then((data) => {
         if (data.exists) {
-          navigate('/register'); 
+          navigate('/'); 
         } else {
           alert('RFID ไม่ถูกต้อง');
         }
@@ -30,13 +30,7 @@ const Home = () => {
   return (
     <header>
     <WebSocketComponent onDataReceived={handleRfidData} />
-    <div className="content">
 
-      <div className="circle"></div>
-      <div className="circle"></div>
-      <div className="circle"></div>
-      <div className="circle"></div>
-    </div>
     </header>
   );
 };
