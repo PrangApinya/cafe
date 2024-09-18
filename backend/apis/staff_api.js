@@ -85,7 +85,7 @@ router.get("/today", async (req, res) => {
 });
 
 // Update staff information
-router.put("/", async (req, res) => {
+router.put("/:rfid", async (req, res) => {
     try {
         const { firstname, lastname, password } = req.body;
 
@@ -93,39 +93,41 @@ router.put("/", async (req, res) => {
         const sanitizedLastname = lastname.trim();
         const sanitizedPassword = password.trim();
 
-        if (sanitizedFirstname === "" || sanitizedLastname === "" || sanitizedPassword === "") {
+        if (!sanitizedFirstname || !sanitizedLastname || !sanitizedPassword) {
             return res.status(400).json({ message: "Please fill all the fields" });
         }
 
-        if(sanitizedPassword.length < 8 || sanitizedPassword.length > 16) {
-            return res.status(400).json({ message: "Password must between 8 to 16 characters long" });
+        if (sanitizedPassword.length < 8 || sanitizedPassword.length > 16) {
+            return res.status(400).json({ message: "Password must be between 8 to 16 characters long" });
         }
 
-        if(sanitizedFirstname.length < 2 || sanitizedFirstname.length > 20 || sanitizedLastname.length < 2 || sanitizedLastname.length > 20) {
+        if (sanitizedFirstname.length < 2 || sanitizedFirstname.length > 20 || sanitizedLastname.length < 2 || sanitizedLastname.length > 20) {
             return res.status(400).json({ message: "First name and last name must be between 2 to 20 characters long" });
         }
 
-        const hashedPassword = bcrypt.hash(sanitizedPassword, 10);
+        const hashedPassword = await bcrypt.hash(sanitizedPassword, 10);
 
-        await Staff.update(
-            {
-                firstname: sanitizedFirstname,
-                lastname: sanitizedLastname,
-                password: hashedPassword
-            },
-            {
-                where: {
-                    id: id
-                }
-            }
-        );
+        const staff = await Staff.findOne({ where: { rfid: req.params.rfid } });
 
-        return res.status(204).json({ message: "Staff information updated" });
-    } catch(err) {
+        if (!staff) {
+            return res.status(404).json({ message: "Staff not found" });
+        }
+
+        await Staff.update({
+            firstname: sanitizedFirstname,
+            lastname: sanitizedLastname,
+            password: hashedPassword
+        }, {
+            where: { rfid: req.params.rfid }
+        });
+
+        return res.status(200).json({ message: "Staff updated successfully" });
+    } catch (err) {
         console.error(err);
         return res.status(500).json({ message: "Something went wrong" });
     }
 });
+
 
 // Retrieve all staffs
 router.get("/", async (req, res) => {

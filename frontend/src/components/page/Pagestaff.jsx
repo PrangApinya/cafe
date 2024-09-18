@@ -98,37 +98,38 @@ const Pagestaff = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!formState.firstname || !formState.lastname || !formState.password || !formState.rfid) {
-      toast.error("กรุณากรอกข้อมูลให้ครบถ้วน");
-      return;
+        toast.error("กรุณากรอกข้อมูลให้ครบถ้วน");
+        return;
     }
 
     try {
-      const response = await axios.post("http://localhost:8085/rfid/check-rfid", { rfid: formState.rfid });
-      if (response.data.exists) {
-        toast.error("RFID นี้ถูกใช้ไปแล้ว กรุณาใช้บัตรอื่น", { autoClose: 1000 });
-        return;
-      } else {
-        const registerResponse = await axios.post("http://localhost:8085/staffs/register", formState);
-        if (registerResponse.status === 201) {
-          toast.success("ลงทะเบียนสำเร็จ", { autoClose: 1000 });
-          setFormState({
-            rfid: '',
-            firstname: '',
-            lastname: '',
-            password: ''
-          });
-          fetchStaffs();
-          setShowAddRow(false);
-          setIsWebSocketActive(false); // ปิด WebSocket เมื่อกด "Add"
+        const response = await axios.post("http://localhost:8085/rfid/check-rfid", { rfid: formState.rfid });
+        if (response.data.exists) {
+            toast.error("RFID นี้ถูกใช้ไปแล้ว กรุณาใช้บัตรอื่น", { autoClose: 1000 });
+            return;
         } else {
-          toast.error(`เกิดข้อผิดพลาดในการลงทะเบียน: ${registerResponse.data.message}`, { autoClose: 1000 });
+            const registerResponse = await axios.post("http://localhost:8085/staffs/register", formState);
+            if (registerResponse.status === 201) {
+                toast.success("ลงทะเบียนสำเร็จ", { autoClose: 1000 });
+                setFormState({
+                    rfid: '',
+                    firstname: '',
+                    lastname: '',
+                    password: ''
+                });
+                fetchStaffs();
+                setShowAddRow(false);
+                setIsWebSocketActive(false); // ปิด WebSocket เมื่อกด "Add"
+            } else {
+                toast.error(`เกิดข้อผิดพลาดในการลงทะเบียน: ${registerResponse.data.message}`, { autoClose: 1000 });
+            }
         }
-      }
     } catch (error) {
-      console.error("Error during RFID check or registration:", error);
-      toast.error(`ลงทะเบียนไม่สำเร็จ: ${error.response?.data?.message || "กรุณาลงใหม่"}`, { autoClose: 1000 });
+        console.error("Error during RFID check or registration:", error);
+        toast.error(`ลงทะเบียนไม่สำเร็จ: ${error.response?.data?.message || "กรุณาลงใหม่"}`, { autoClose: 1000 });
     }
-  };
+};
+
 
   const handleWebSocketData = (data) => {
     setFormState((prevState) => ({
