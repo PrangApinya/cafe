@@ -15,20 +15,11 @@ const admin = require("./middlewares/admin");
 // เอาไว้เรียก api ย่อย จะเพิ่ม api เพิ่มตรงนี้
 app.use("/rfid", require("./apis/rfid_api")); //เรียก ค่า rfid จาก nodered
 app.use("/menus", require("./apis/menu_api"));
-app.use("/staffs", admin, require("./apis/staff_api"));
+app.use("/staffs", /*admin,*/ require("./apis/staff_api"));
 app.use("/order", require("./apis/order_api"));
 app.use("/receipts", require("./apis/receipt_api"));
 app.use("/check", require("./apis/check_api"));
-
-app.get('/api/buzzer', (req, res) => {
-    exec('python3 /home/watchaphon/cafe/backend/buzzer_control.py on', (error, stdout, stderr) => {
-      if (error) {
-        console.error(`Error: ${error.message}`);
-        return res.status(500).send('Error triggering buzzer');
-      }
-      res.send('Buzzer triggered successfully');
-    });
-  });
+app.use("/buzzer",require("./apis/buzzer_api"));
 
 // run node
 app.listen(8085, () => {

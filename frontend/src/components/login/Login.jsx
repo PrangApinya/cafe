@@ -47,7 +47,7 @@ const Login = () => {
         if (data.exists) {
           navigate('/'); 
         } else {
-          /**/
+          alert('RFID ไม่ถูกต้อง');
         }
       })
       .catch((error) => {

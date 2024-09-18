@@ -26,6 +26,7 @@ const Cafe = () => {
     <div className="overlay-content">
       <a href="/dashboard">DASHBOARD</a>
       <a href="/staff">STAFF</a>
+      <a href="/login">LOGOUT</a>
      
     </div>
   </div>
