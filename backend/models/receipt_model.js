@@ -9,22 +9,6 @@ const Receipt = sequelize.define("receipt", {
         autoIncrement: true,
         allowNull: false, 
     },
-    menu_id: {
-        type: Sequelize.INTEGER,
-        allowNull: false,
-        references: {
-            model: "menu",
-            key: "id",
-        }
-    },
-    sweet_level: {
-        type: Sequelize.INTEGER,
-        allowNull: false,
-    },
-    topping: {
-        type: Sequelize.STRING,
-        allowNull: true,
-    },
     timestamp: {
         type: Sequelize.DATE,
         defaultValue: new Date().getTime(),

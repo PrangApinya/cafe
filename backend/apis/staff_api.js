@@ -68,7 +68,7 @@ router.delete("/", async (req, res) => {
 });
 
 // Check for staffs at the current day
-router.get("/time", async (req, res) => {
+router.get("/today", async (req, res) => {
     try {
         const date = new Date().toISOString().split('T')[0];
         const checks = await Check.findAll({
@@ -79,9 +79,64 @@ router.get("/time", async (req, res) => {
 
         return res.status(204).json(checks);
     } catch(err) {
+        console.err(error);
         return res.status(500).json({ message: "Something went wrong" });
     }
-})
+});
+
+// Update staff information
+router.put("/", async (req, res) => {
+    try {
+        const { firstname, lastname, password } = req.body;
+
+        const sanitizedFirstname = firstname.trim();
+        const sanitizedLastname = lastname.trim();
+        const sanitizedPassword = password.trim();
+
+        if (sanitizedFirstname === "" || sanitizedLastname === "" || sanitizedPassword === "") {
+            return res.status(400).json({ message: "Please fill all the fields" });
+        }
+
+        if(sanitizedPassword.length < 8 || sanitizedPassword.length > 16) {
+            return res.status(400).json({ message: "Password must between 8 to 16 characters long" });
+        }
+
+        if(sanitizedFirstname.length < 2 || sanitizedFirstname.length > 20 || sanitizedLastname.length < 2 || sanitizedLastname.length > 20) {
+            return res.status(400).json({ message: "First name and last name must be between 2 to 20 characters long" });
+        }
+
+        const hashedPassword = bcrypt.hash(sanitizedPassword, 10);
+
+        await Staff.update(
+            {
+                firstname: sanitizedFirstname,
+                lastname: sanitizedLastname,
+                password: hashedPassword
+            },
+            {
+                where: {
+                    id: id
+                }
+            }
+        );
+
+        return res.status(204).json({ message: "Staff information updated" });
+    } catch(err) {
+        console.error(err);
+        return res.status(500).json({ message: "Something went wrong" });
+    }
+});
+
+// Retrieve all staffs
+router.get("/", async (req, res) => {
+    try {
+        const staffs = await Staff.findAll();
+        return res.status(200).json(staffs);
+    } catch(err) {
+        console.error(err);
+        return res.status(500).json({ message: "Something went wrong" });
+    }
+});
 
 // Get all staff
 router.get("/", async (req, res) => {
