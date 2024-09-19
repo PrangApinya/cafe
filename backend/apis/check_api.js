@@ -25,6 +25,15 @@ router.post("/check-in", async (req, res) => {
     }
 });
 
+router.get('/', async (req, res) => {
+    try {
+      const checks = await Check.findAll();
+      return res.status(200).json(checks);
+    } catch (err) {
+      console.error(err);
+      return res.status(500).json({ message: 'Failed to fetch attendance records' });
+    }
+  });
 
 
 module.exports = router;
