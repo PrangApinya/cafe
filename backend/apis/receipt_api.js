@@ -43,6 +43,19 @@ router.get("/sales-today", async (req, res) => {
             }
         });
 
+        // const sales = await Receipt.findAll({
+        //     attributes: ["timestamp"],
+        //     where: {
+        //         timestamp: {
+        //             [Op.gte]: timestamp,
+        //             [Op.lt]: timestamp + 86400000
+        //         }
+        //     }
+        // });
+        // const salesToday = sales.filter((sale) => {
+        //     return sale.timestamp.toISOString().split('T')[0] === timestamp.toISOString().split('T')[0]
+        // });
+
         return res.status(200).json(salesToday);
     } catch(err) {
         console.error(err);
@@ -69,6 +82,19 @@ router.get("/sales-this-month", async (req, res) => {
                 }
             }
         });
+
+        // const sales = await Receipt.findAll({
+        //     attributes: ["timestamp"],
+        //     where: {
+        //         timestamp: {
+        //             [Op.gte]: timestamp,
+        //             [Op.lt]: timestamp + 2678400000
+        //         }
+        //     }
+        // });
+        // const salesThisMonth = sales.filter((sale) => {
+        //     return sale.timestamp.toISOString().split('T')[0].substring(0, 7) === timestamp.toISOString().split('T')[0].substring(0, 7)
+        // });
 
         return res.status(200).json(salesThisMonth);
     } catch(err) {
