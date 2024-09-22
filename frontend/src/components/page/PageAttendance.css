@@ -1,0 +1,31 @@
+/* src/components/PageAttendance.css */
+
+.attendance-container {
+    padding: 20px;
+    max-width: 900px; /* เพิ่มขนาด max-width ให้ใหญ่ขึ้น */
+    margin: 0 auto;
+    font-family: Arial, sans-serif; /* กำหนดฟอนต์พื้นฐาน */
+  }
+  
+  .calendar-container {
+    margin: 30px 0; /* เพิ่ม margin เพื่อให้มีระยะห่างที่เหมาะสม */
+    text-align: center; /* จัดตำแหน่งปฏิทินให้อยู่กลาง */
+  }
+  
+  .daily-records {
+    margin-top: 20px;
+    padding: 10px;
+    background-color: #f9f9f9; /* เพิ่มพื้นหลังเพื่อให้เนื้อหาเด่นชัด */
+    border-radius: 5px; /* เพิ่มมุมมนให้กับพื้นหลัง */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* เพิ่มเงาเพื่อให้ดูลอยขึ้น */
+  }
+  
+  .calendar-tile-content {
+    color: #4CAF50; /* เปลี่ยนสีให้ดูสดใส */
+    font-weight: bold;
+    text-align: center;
+    font-size: 14px; /* ปรับขนาดตัวอักษรให้เหมาะสม */
+  }
+  
+
+  

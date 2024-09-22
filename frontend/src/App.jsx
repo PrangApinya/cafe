@@ -13,6 +13,7 @@ import Register from './components/register/Register';
 import Home from './components/cafehead/Home';
 import Login from './components/login/Login';
 import Pagestaff from './components/page/Pagestaff';
+import PageAttendance from './components/page/PageAttendance';
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
         <Route path="/login" element={<Login/>}/>
         <Route path="/dashboard" element={<PageDashboard/>} />
         <Route path="/staff" element={<Pagestaff/>} />
+        <Route path="/check" element={<PageAttendance/>} />
       </Routes>
     </Router>
 
