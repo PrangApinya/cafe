@@ -33,4 +33,5 @@ const Staff = sequelize.define("staff", {
     await Staff.sync({ force: false });
 })();
 
+
 module.exports = Staff;

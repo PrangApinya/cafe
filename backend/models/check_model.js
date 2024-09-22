@@ -36,4 +36,5 @@ const Check = sequelize.define("check", {
     await Check.sync({ force: false });
 })();
 
+
 module.exports = Check;
