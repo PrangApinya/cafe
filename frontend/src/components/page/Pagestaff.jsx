@@ -256,7 +256,7 @@ const Pagestaff = () => {
             <label>
               Password:
               <input
-                type="text"
+                type="password"
                 value={newData.password}
                 onChange={(e) => setNewData({ ...newData, password: e.target.value })}
               />

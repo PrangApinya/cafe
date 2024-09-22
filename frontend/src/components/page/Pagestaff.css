@@ -1,9 +1,18 @@
 .pagestaff-container {
-    background-color: #f5e6d9; /* สีน้ำตาลอ่อน */
-    background-size: cover;
-    background-position: center;
-    font-family: Arial, sans-serif; /* ฟอนต์ */
-}
+    /* ค่าเดิม */
+    background-color: #f5e6d9;
+    font-family: Arial, sans-serif;
+  
+    /* ค่าที่เพิ่มเข้าไป */
+    height: 100vh; /* ความสูงเท่ากับความสูงของ viewport */
+    width: 100vw; /* ความกว้างเท่ากับความกว้างของ viewport */
+    margin: 0; /* ลบ margin ทั้งหมด */
+    padding: 0; /* ลบ padding ทั้งหมด */
+    position: fixed; /* ตำแหน่งคงที่ */
+    top: 0; /* วางไว้ที่ด้านบนสุด */
+    left: 0; /* วางไว้ที่ด้านซ้ายสุด */
+    z-index: 9999; /* วางไว้ด้านบนสุดของเลเยอร์อื่นๆ */
+  }
 
 .pagestaff-container .table {
     width: 100%;
