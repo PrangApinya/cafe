@@ -20,7 +20,8 @@ const Pagecake = () => {
                                 <div class="card-body">
                                     <h4>Chocolate </h4>
                                     <h5>50THB</h5>
-                                    <button class="btn btn-primary" onclick="window.location.href='#';">Check out</button>
+                                    <button type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                    Add menu </button>
                                 </div>
                             </div>
                         </div>
@@ -31,7 +32,8 @@ const Pagecake = () => {
                                 <div class="card-body">
                                     <h4>Green Tea </h4>
                                     <h5>55THB</h5>
-                                    <button class="btn btn-primary" onclick="window.location.href='#';">Check out</button>
+                                    <button type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                    Add menu </button>
                                 </div>
                             </div>
                         </div>
@@ -42,7 +44,8 @@ const Pagecake = () => {
                                 <div class="card-body">
                                     <h4>Strawberry </h4>
                                     <h5>55THB</h5>
-                                    <button class="btn btn-primary" onclick="window.location.href='#';">Check out</button>
+                                    <button type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                    Add menu </button>
                                 </div>
                             </div>
                         </div>
@@ -53,7 +56,8 @@ const Pagecake = () => {
                                 <div class="card-body">
                                     <h4>Macaron</h4>
                                     <h5>70THB</h5>
-                                    <button class="btn btn-primary" onclick="window.location.href='#';">Check out</button>
+                                        <button type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                    Add menu </button>
                                 </div>
                             </div>
                         </div>
