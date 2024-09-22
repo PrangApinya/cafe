@@ -33,11 +33,7 @@ const Pagestaff = () => {
   const fetchStaffs = async () => {
     try {
       const response = await axios.get('http://localhost:8085/staffs');
-      if (Array.isArray(response.data)) {
-        setStaffs(response.data);
-      } else {
-        setStaffs([]);
-      }
+      setStaffs(Array.isArray(response.data) ? response.data : []);
     } catch (error) {
       console.error('Error fetching staff data:', error);
     }
@@ -52,7 +48,7 @@ const Pagestaff = () => {
       setNewData({
         firstname: staff.firstname,
         lastname: staff.lastname,
-        password: staff.password
+        password: ''
       });
       setError('');
     }
@@ -84,7 +80,6 @@ const Pagestaff = () => {
       return;
     }
 
-    
     try {
       await axios.put(`http://localhost:8085/staffs/${editId}`, newData);
       fetchStaffs();
@@ -98,38 +93,37 @@ const Pagestaff = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!formState.firstname || !formState.lastname || !formState.password || !formState.rfid) {
-        toast.error("กรุณากรอกข้อมูลให้ครบถ้วน");
-        return;
+      toast.error("กรุณากรอกข้อมูลให้ครบถ้วน");
+      return;
     }
 
     try {
-        const response = await axios.post("http://localhost:8085/rfid/check-rfid", { rfid: formState.rfid });
-        if (response.data.exists) {
-            toast.error("RFID นี้ถูกใช้ไปแล้ว กรุณาใช้บัตรอื่น", { autoClose: 1000 });
-            return;
+      const response = await axios.post("http://localhost:8085/rfid/check-rfid", { rfid: formState.rfid });
+      if (response.data.exists) {
+        toast.error("RFID นี้ถูกใช้ไปแล้ว กรุณาใช้บัตรอื่น", { autoClose: 1000 });
+        return;
+      } else {
+        const registerResponse = await axios.post("http://localhost:8085/staffs/register", formState);
+        if (registerResponse.status === 201) {
+          toast.success("ลงทะเบียนสำเร็จ", { autoClose: 1000 });
+          setFormState({
+            rfid: '',
+            firstname: '',
+            lastname: '',
+            password: ''
+          });
+          fetchStaffs();
+          setShowAddRow(false);
+          setIsWebSocketActive(false);
         } else {
-            const registerResponse = await axios.post("http://localhost:8085/staffs/register", formState);
-            if (registerResponse.status === 201) {
-                toast.success("ลงทะเบียนสำเร็จ", { autoClose: 1000 });
-                setFormState({
-                    rfid: '',
-                    firstname: '',
-                    lastname: '',
-                    password: ''
-                });
-                fetchStaffs();
-                setShowAddRow(false);
-                setIsWebSocketActive(false); // ปิด WebSocket เมื่อกด "Add"
-            } else {
-                toast.error(`เกิดข้อผิดพลาดในการลงทะเบียน: ${registerResponse.data.message}`, { autoClose: 1000 });
-            }
+          toast.error(`เกิดข้อผิดพลาดในการลงทะเบียน: ${registerResponse.data.message}`, { autoClose: 1000 });
         }
+      }
     } catch (error) {
-        console.error("Error during RFID check or registration:", error);
-        toast.error(`ลงทะเบียนไม่สำเร็จ: ${error.response?.data?.message || "กรุณาลงใหม่"}`, { autoClose: 1000 });
+      console.error("Error during RFID check or registration:", error);
+      toast.error(`ลงทะเบียนไม่สำเร็จ: ${error.response?.data?.message || "กรุณาลงใหม่"}`, { autoClose: 1000 });
     }
-};
-
+  };
 
   const handleWebSocketData = (data) => {
     setFormState((prevState) => ({
@@ -142,87 +136,87 @@ const Pagestaff = () => {
     navigate('/login');
   };
 
-  const displayPassword = (password) => {
-    if (password.length > 8) {
-      return password.substring(0, 8) + '...';
-    }
-    return password;
-  };
-
   const toggleAddRow = () => {
     setShowAddRow(!showAddRow);
-    setIsWebSocketActive(!showAddRow); // เปิด/ปิด WebSocket เมื่อกดปุ่ม Add/Cancel
+    setIsWebSocketActive(!showAddRow);
   };
 
   return (
-    <div>
+    <div className="pagestaff-container"> {/* เพิ่มคลาสนี้ */}
       <div className="container mt-3">
         <h1>Staff</h1>
         <button onClick={toggleAddRow}>
           {showAddRow ? 'Cancel' : 'Add New Staff'}
         </button>
         <button onClick={handleLoginClick}>Go to Login</button>
+
+        {/* Table for adding new staff */}
+        {showAddRow && (
+          <div>
+            <h3>Add New Staff</h3>
+            <table className="table">
+              <tbody>
+                <tr>
+                  <td>
+                    <input
+                      type="text"
+                      name="rfid"
+                      value={formState.rfid}
+                      onChange={(e) => setFormState({ ...formState, rfid: e.target.value })}
+                      placeholder="RFID"
+                    />
+                  </td>
+                  <td>
+                    <input
+                      type="text"
+                      name="firstname"
+                      value={formState.firstname}
+                      onChange={(e) => setFormState({ ...formState, firstname: e.target.value })}
+                      placeholder="Firstname"
+                    />
+                  </td>
+                  <td>
+                    <input
+                      type="text"
+                      name="lastname"
+                      value={formState.lastname}
+                      onChange={(e) => setFormState({ ...formState, lastname: e.target.value })}
+                      placeholder="Lastname"
+                    />
+                  </td>
+                  <td>
+                    <input
+                      type="password"
+                      name="password"
+                      value={formState.password}
+                      onChange={(e) => setFormState({ ...formState, password: e.target.value })}
+                      placeholder="Password"
+                    />
+                  </td>
+                  <td>
+                    <button onClick={handleSubmit}>Add</button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        )}
+
+        {/* Table for displaying staff information */}
         <table className="table table-hover mt-3">
           <thead className="table-header">
             <tr>
-              <th>RFID</th>
               <th>ชื่อ</th>
               <th>นามสกุล</th>
-              <th>รหัสผ่าน</th>
               <th>Actions</th>
             </tr>
           </thead>
           <tbody>
-            {showAddRow && (
-              <tr>
-                <td>
-                  <input
-                    type="text"
-                    name="rfid"
-                    value={formState.rfid}
-                    onChange={(e) => setFormState({ ...formState, rfid: e.target.value })}
-                    placeholder="RFID"
-                  />
-                </td>
-                <td>
-                  <input
-                    type="text"
-                    name="firstname"
-                    value={formState.firstname}
-                    onChange={(e) => setFormState({ ...formState, firstname: e.target.value })}
-                    placeholder="Firstname"
-                  />
-                </td>
-                <td>
-                  <input
-                    type="text"
-                    name="lastname"
-                    value={formState.lastname}
-                    onChange={(e) => setFormState({ ...formState, lastname: e.target.value })}
-                    placeholder="Lastname"
-                  />
-                </td>
-                <td>
-                  <input
-                    type="password"
-                    name="password"
-                    value={formState.password}
-                    onChange={(e) => setFormState({ ...formState, password: e.target.value })}
-                    placeholder="Password"
-                  />
-                </td>
-                <td>
-                  <button onClick={handleSubmit}>Add</button>
-                </td>
-              </tr>
-            )}
             {Array.isArray(staffs) && staffs.length > 0 ? (
               staffs.map((staff) => (
                 <tr key={staff.rfid}>
-                  <td>{staff.rfid}</td>
                   <td>{staff.firstname}</td>
                   <td>{staff.lastname}</td>
-                  <td>{displayPassword(staff.password)}</td>
                   <td>
                     <button onClick={() => handleEdit(staff)}>
                       {editId === staff.rfid ? 'Cancel' : 'Edit'}
@@ -233,11 +227,12 @@ const Pagestaff = () => {
               ))
             ) : (
               <tr>
-                <td colSpan="5">No staff data available</td>
+                <td colSpan="3">No staff data available</td>
               </tr>
             )}
           </tbody>
         </table>
+
         {editId && (
           <div className="edit-form">
             <h3>Edit Staff</h3>
