@@ -1,41 +1,58 @@
-.container {
-    display: flex;
-    flex-direction: column;
-    align-items: center; /* จัดตำแหน่งให้อยู่กลางแนวนอน */
-    justify-content: flex-start; /* จัดตำแหน่งให้เริ่มที่ด้านบน */
-    padding: 20px;
-}
+.pagestaff-container {
+    /* ค่าเดิม */
+    background-color: #f5e6d9;
+    font-family: Arial, sans-serif;
+  
+    /* ค่าที่เพิ่มเข้าไป */
+    height: 100vh; /* ความสูงเท่ากับความสูงของ viewport */
+    width: 100vw; /* ความกว้างเท่ากับความกว้างของ viewport */
+    margin: 0; /* ลบ margin ทั้งหมด */
+    padding: 0; /* ลบ padding ทั้งหมด */
+    position: fixed; /* ตำแหน่งคงที่ */
+    top: 0; /* วางไว้ที่ด้านบนสุด */
+    left: 0; /* วางไว้ที่ด้านซ้ายสุด */
+    z-index: 9999; /* วางไว้ด้านบนสุดของเลเยอร์อื่นๆ */
+  }
 
-.table-container {
+.pagestaff-container .table {
     width: 100%;
-    overflow-x: auto; /* เพิ่มการเลื่อนในแนวนอนหากตารางกว้างเกินไป */
+    margin-top: 20px;
+    background-color: white; /* สีขาวสำหรับตาราง */
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
-form {
+.pagestaff-container .table-header {
+    background-color: #f2f2f2; /* สีพื้นหลังของ header */
+}
+
+.pagestaff-container .table td {
+    padding: 10px;
+}
+
+.pagestaff-container .error-message {
+    color: red;
+    margin-top: 10px;
+}
+
+.pagestaff-container .edit-form {
+    margin-top: 20px;
+    padding: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: white; /* สีขาวสำหรับฟอร์มแก้ไข */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.pagestaff-container .edit-form label {
+    display: block;
+    margin-bottom: 10px;
+}
+
+.pagestaff-container .edit-form input {
     width: 100%;
-    max-width: 600px; /* ขนาดสูงสุดของฟอร์ม */
-    margin-bottom: 20px;
-}
-
-table {
-    width: 100%;
-    border-collapse: collapse;
-}
-
-th, td {
     padding: 8px;
-    text-align: center; /* จัดข้อความให้ตรงกลาง */
-    border: 1px solid #ddd;
-}
-
-th {
-    background-color: #f2f2f2;
-}
-
-.table-header {
-    background-color: #f8f9fa;
-}
-
-.btn {
-    margin: 5px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
 }
