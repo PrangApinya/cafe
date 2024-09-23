@@ -39,6 +39,10 @@ const Pagestaff = () => {
     }
   };
 
+  const handleCheckInRedirect = (rfid) => {
+    navigate(`/attendance`, { state: { rfid } });
+  };
+
   const handleEdit = (staff) => {
     if (editId === staff.rfid) {
       setEditId(null);
@@ -223,6 +227,9 @@ const Pagestaff = () => {
                     </button>
                     <button onClick={() => handleDelete(staff.rfid)}>Delete</button>
                   </td>
+                  <td>
+                  <button onClick={() => handleCheckInRedirect(staff.rfid)}>Check In</button> {/* ปุ่ม Check In */}
+                </td>
                 </tr>
               ))
             ) : (
