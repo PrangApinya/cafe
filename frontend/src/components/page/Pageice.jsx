@@ -16,7 +16,7 @@ const Pageice = () => {
 
                         <div class="col-sm-3 ">
                             <div class="card ms-5" >
-                            <img src={latteice} class="card-img-top" width="100" height="140"/>
+                            <img src={latteice} class="card-img-top"  height="150"/>
                             <div class="card-body">
                                 <h4>latte</h4>
                                 <h5>50THB</h5>
