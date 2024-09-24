@@ -16,7 +16,7 @@ router.get("/", async (req, res) => {
 router.get("/hot", async (req, res) => {
     try {
         const menus = await Menu.findAll({
-            attributes: ["id", "name", "price"],
+            attributes: ["id", "name", "price", "filename"],
             where: {
                 type: "HOT"
             }
@@ -31,7 +31,7 @@ router.get("/hot", async (req, res) => {
 router.get("/ice", async (req, res) => {
     try {
         const menus = await Menu.findAll({
-            attributes: ["id", "name", "price"],
+            attributes: ["id", "name", "price", "filename"],
             where: {
                 type: "ICED"
             }
@@ -46,7 +46,7 @@ router.get("/ice", async (req, res) => {
 router.get("/cake", async (req, res) => {
     try {
         const menus = await Menu.findAll({
-            attributes: ["id", "name", "price"],
+            attributes: ["id", "name", "price", "filename"],
             where: {
                 type: "CAKE"
             }
