@@ -1,70 +1,67 @@
-import React from 'react'
-import'./Page.css'
+import React, { useState, useEffect } from 'react'
+import { useNavigate, Link } from 'react-router-dom'
+import './Page.css'
 import Cafe from '../cafehead/Cafe'
-import latteice from '../../assets/img/latteice.png'
-import capoice from '../../assets/img/capoice.png'
-import gteaice from '../../assets/img/gteaice.png'
-import teaice from '../../assets/img/teaice.png'
+import axios from 'axios'
+
 const Pageice = () => {
-    
-  return (
-    <div>
-        <Cafe/>
-            <div class="box2">
-                <div class="boxcoffee mt-5">
-                    <div class="row"> 
+    const [loading, setLoading] = useState(true);
+    const [menus, setMenus] = useState([]);
+    const [error, setError] = useState(null);
+    const navigate = useNavigate();
 
-                        <div class="col-sm-3 ">
-                            <div class="card ms-5" >
-                            <img src={latteice} class="card-img-top" width="100" height="140"/>
-                            <div class="card-body">
-                                <h4>latte</h4>
-                                <h5>50THB</h5>
-                                <button class="btn btn-primary" onclick="window.location.href='#';"><h5>Add menu</h5></button>
-                            </div>
-                            </div>
-                        </div>
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await axios.get('http://localhost:8085/menus/ice');
+                setMenus(response.data);
+            } catch (error) {
+                setError(error);
+            } finally {
+                setLoading(false);
+            }
+        }
+        fetchData();
+    }, []);
 
-                        <div class="col-sm-3">
-                            <div class="card ms-5" >
-                            <img src={capoice} class="card-img-top"  height="200"/>
-                            <div class="card-body">
-                                <h4>Cappuccino</h4>
-                                <h5>50THB</h5>
-                                <button class="btn btn-primary" onclick="window.location.href='#';"><h5>Add menu</h5></button>
-                            </div>
-                            </div>
-                        </div>
+    const handleItemClick = () => {
+        navigate(`/${menu.id}`)
+    }
 
-                        <div class="col-sm-3">
-                            <div class="card ms-5" >
-                                <img src={gteaice} class="card-img-top" width="170" height="140"/>
-                                <div class="card-body">
-                                    <h4>Green tea</h4>
-                                    <h5>50THB</h5>
-                                    <button class="btn btn-primary" onclick="window.location.href='#';"><h5>Add menu</h5></button>
+    return (
+        <>
+            <Cafe />
+            <div className="box2">
+                <div className="boxcoffee mt-5">
+                    <div className="row">
+                        { loading && <p>Loading...</p> }
+                        { error && <p>Error: {error.message}</p> }
+                        { menus && menus.map((menu, index) => (
+                            <div className="col-sm-3 " key={index}>
+                                <div className="card ms-5" >
+                                    <img src={`/src/assets/img/${menu.filename}`} className="card-img-top" width="170" height="160" />
+                                    <div className="card-body">
+                                        <h4>{menu.name}</h4>
+                                        <h5>{menu.price} THB</h5>
+                                        <Link to={`/${menu.id}`}>
+                                            <button
+                                                className="btn btn-primary"
+                                                data-bs-toggle="modal"
+                                                data-bs-target="#exampleModal"
+                                            >
+                                                Add menu
+                                            </button>
+                                        </Link>
+                                    </div>
                                 </div>
-                                </div>
-                        </div>
-
-                        <div class="col-sm-3">
-                        <div class="card  ms-5" >
-                                <img src={teaice} class="card-img-top" height="140"/>
-                                <div class="card-body">
-                                    <h4>thai tea</h4>
-                                    <h5>50THB</h5>
-                                    <button class="btn btn-primary" onclick="window.location.href='#';"><h5>Add menu</h5></button>
-                                </div>
-                                </div>
+                            </div>
+                        ))}
                     </div>
-                    </div>  
                 </div>
-                
-               
-            </div>      
- </div>
-   
-  )
+            </div>
+        </>
+
+    )
 }
 
 export default Pageice

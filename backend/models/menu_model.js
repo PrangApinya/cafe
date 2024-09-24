@@ -21,6 +21,10 @@ const Menu = sequelize.define("menu", {
         type: Sequelize.STRING,
         allowNull: false,
     },
+    filename: {
+        type: Sequelize.STRING,
+        allowNull: false,
+    }
 }, {
     // Additional options if needed
     timestamps: false // ปิดการใช้งานฟิลด์ createdAt และ updatedAt
