@@ -1,14 +1,17 @@
+html, body {
+    margin: 0;          /* Remove default margins */
+    height: 100%;       /* Make sure body takes full height */
+}
+
 .pagestaff-container {
-    background-color: #f3e5d5; /* โทนสีครีมอ่อนๆ เหมาะกับคาเฟ่ */
-    font-family: 'Playfair Display', serif; /* ใช้ฟอนต์ที่มีความเป็นคาเฟ่ */
-    height: 100%;
-    width: 100%;
-    margin: 0;
-    padding: 20px;
+    background-color: #f3e5d5; /* Soft cream color suitable for a cafe */
+    font-family: 'Playfair Display', serif; /* Cafe-like font */
+    min-height: 100vh; /* Set to at least the full height of the viewport */
+
     display: flex;
     flex-direction: column;
     align-items: center;
-    
+    justify-content: flex-start; /* Align content to the top */
 }
 
 .pagestaff-container h1 {

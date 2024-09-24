@@ -3,8 +3,8 @@ import axios from 'axios';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import WebSocketComponent from '../WebSocketComponent';
+import { Link, useLocation } from 'react-router-dom'; // Import Link here
 import './PageAttendance.css';
-import { useLocation } from 'react-router-dom';
 
 const PageAttendance = () => {
   const location = useLocation();
@@ -74,7 +74,12 @@ const PageAttendance = () => {
 
   return (
     <div className='attenbackground'>
+      {/* Wrap the button with Link */}
+      <Link to="/staff">
+        <button>Back</button>
+      </Link>
       <div className="attendance-container">
+        <h1 className="pageh1">Check</h1>
         <div className="left-side">
           <div className="calendar-container">
             <Calendar

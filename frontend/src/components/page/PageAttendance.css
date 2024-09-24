@@ -2,7 +2,7 @@
   background-color: #e1d2c4d7; /* Your background color */
   height: 100vh; /* Set height to cover the full viewport height */
   width: 100vw; /* Set width to cover the full viewport width */
-  display: flex; /* Flexbox for centering if needed */
+  display: flex; /* Flexbox for centering */
   justify-content: center; /* Center content horizontally */
   align-items: center; /* Center content vertically */
   position: relative; /* Position relative for absolute children if necessary */
@@ -11,18 +11,28 @@
 .attendance-container {
   display: flex;
   padding: 100px;
-  width: 800px;
-  height:600px;
+  width: 90%; /* Adjusted to use a percentage width for responsiveness */
+  max-width: 800px; /* Set a maximum width */
+  height: 600px; /* Keep the height as required */
   margin: 0 auto;
   background-color: #f6f0e0; /* Maintain the same color as the background */
   border-radius: 10px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2); /* Shadow effect */
-  font-family: 'Merriweather', serif; /* Simple font */
+  overflow: hidden; /* Prevent overflow of contents */
 }
 
 .left-side {
   flex: 1;
   margin-right: 20px;
+}
+
+.pageh1 {
+  position: absolute; /* Position it absolutely */
+  top: 20px; /* Adjust to your liking */
+  left: 200px; /* Adjust to your liking */
+  font-size: 4rem; /* Adjust font size if needed */
+  color: #80685c; /* Use the same color for consistency */
+  margin: 0; /* Remove margin */
 }
 
 .calendar-container {
@@ -51,6 +61,7 @@
   background-color: #ffffff; /* สีครีมสว่าง */
   border-radius: 10px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Shadow effect */
+  height: auto; /* Allow height to adjust based on content */
 }
 
 .daily-records {
@@ -127,9 +138,10 @@ h2 {
   text-align: center;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15); /* Shadow effect for RFID container */
 }
+
 .rfid-display {
-  margin-top: 20px;
-  padding: 15px;
+  top: 1px;
+  padding: 5px;
   background-color: #f4dfc0; /* พื้นหลังสีน้ำตาลอ่อน */
   border-radius: 8px;
   font-size: 1.5rem;
@@ -138,7 +150,24 @@ h2 {
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Shadow effect */
   text-align: center; /* Center the text */
 }
+
 .rfid-container h2 {
   font-size: 1.5rem;
   color: #5d4a3a;
+}
+
+.back-button {
+  position: absolute; /* Make the button position absolute */
+  top: 20px; /* Adjust as necessary */
+  left: 20px; /* Adjust as necessary */
+  padding: 10px 20px; /* Button padding */
+  background-color: #5a4636; /* Dark brown background */
+  color: white; /* White text */
+  border: none; /* No border */
+  border-radius: 5px; /* Rounded corners */
+  cursor: pointer; /* Pointer cursor */
+}
+
+.back-button:hover {
+  background-color: #4e3a30; /* Darker shade on hover */
 }
