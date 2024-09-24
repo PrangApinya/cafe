@@ -1,27 +1,22 @@
-// src/components/PageAttendance.js
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import WebSocketComponent from '../WebSocketComponent';
 import './PageAttendance.css';
+import { useLocation } from 'react-router-dom';
 
 const PageAttendance = () => {
+  const location = useLocation();
+  const { rfid } = location.state || {}; // Get the RFID from location state
+
   const [attendanceRecords, setAttendanceRecords] = useState([]);
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [dailyRecords, setDailyRecords] = useState([]);
   const [daysWorked, setDaysWorked] = useState(0);
-  const [selectedRfid, setSelectedRfid] = useState('');
+  const [totalDaysInMonth, setTotalDaysInMonth] = useState(0); // New state for total days in month
+  const [selectedRfid, setSelectedRfid] = useState(rfid || ''); // Set initial RFID if passed
   const [error, setError] = useState(null);
-
-  useEffect(() => {
-    if (selectedRfid) {
-      const recordsForRfid = attendanceRecords.filter(record => record.staff_id === selectedRfid);
-      const uniqueDates = new Set(recordsForRfid.map(record => record.date));
-      setDaysWorked(uniqueDates.size);
-      setDailyRecords(recordsForRfid.filter(record => record.date === formatDate(selectedDate)));
-    }
-  }, [attendanceRecords, selectedDate, selectedRfid]);
 
   useEffect(() => {
     const fetchAttendanceRecords = async () => {
@@ -36,6 +31,16 @@ const PageAttendance = () => {
     fetchAttendanceRecords();
   }, []);
 
+  useEffect(() => {
+    if (selectedRfid) {
+      const recordsForRfid = attendanceRecords.filter(record => record.staff_id === selectedRfid);
+      const uniqueDates = new Set(recordsForRfid.map(record => record.date));
+      setDaysWorked(uniqueDates.size);
+      setDailyRecords(recordsForRfid.filter(record => record.date === formatDate(selectedDate)));
+      getDaysWorkedInMonth(recordsForRfid);
+    }
+  }, [attendanceRecords, selectedDate, selectedRfid]);
+
   const formatDate = (date) => {
     return new Date(date).toLocaleDateString('en-CA', { timeZone: 'Asia/Bangkok' });
   };
@@ -46,12 +51,24 @@ const PageAttendance = () => {
 
   const handleRfidData = (rfid) => {
     setSelectedRfid(rfid);
-
     // Fetch records for the given RFID
     const recordsForRfid = attendanceRecords.filter(record => record.staff_id === rfid);
     const uniqueDates = new Set(recordsForRfid.map(record => record.date));
     setDaysWorked(uniqueDates.size);
     setDailyRecords(recordsForRfid.filter(record => record.date === formatDate(selectedDate)));
+    getDaysWorkedInMonth(recordsForRfid);
+  };
+
+  const getDaysWorkedInMonth = (records) => {
+    const month = selectedDate.getMonth();
+    const year = selectedDate.getFullYear();
+    
+    const uniqueDates = new Set(records.filter(record => {
+      const recordDate = new Date(record.date);
+      return recordDate.getMonth() === month && recordDate.getFullYear() === year;
+    }).map(record => record.date)); // ใช้ Set เพื่อเก็บเฉพาะวันที่ไม่ซ้ำ
+
+    setTotalDaysInMonth(uniqueDates.size); // นับจำนวนวันที่ไม่ซ้ำ
   };
 
   if (error) return <div>{error}</div>;
@@ -87,6 +104,7 @@ const PageAttendance = () => {
 
       <div>
         <h2>Total Days Worked: {daysWorked}</h2>
+        <h2>Days Worked This Month: {totalDaysInMonth}</h2> {/* Display total days worked in month */}
         <h2>RFID: {selectedRfid}</h2>
       </div>
 

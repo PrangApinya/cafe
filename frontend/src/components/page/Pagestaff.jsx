@@ -39,6 +39,10 @@ const Pagestaff = () => {
     }
   };
 
+  const handleCheckInRedirect = (rfid) => {
+    navigate(`/attendance`, { state: { rfid } });
+  };
+
   const handleEdit = (staff) => {
     if (editId === staff.rfid) {
       setEditId(null);
@@ -206,9 +210,10 @@ const Pagestaff = () => {
         <table className="table table-hover mt-3">
           <thead className="table-header">
             <tr>
-              <th>ชื่อ</th>
-              <th>นามสกุล</th>
+              <th>Firstname</th>
+              <th>Lastname</th>
               <th>Actions</th>
+              <th>Time Attendance</th>
             </tr>
           </thead>
           <tbody>
@@ -223,6 +228,9 @@ const Pagestaff = () => {
                     </button>
                     <button onClick={() => handleDelete(staff.rfid)}>Delete</button>
                   </td>
+                  <td>
+                  <button onClick={() => handleCheckInRedirect(staff.rfid)}>Check</button> {/* ปุ่ม Check In */}
+                </td>
                 </tr>
               ))
             ) : (
