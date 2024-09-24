@@ -1,58 +1,99 @@
 .pagestaff-container {
-    /* ค่าเดิม */
-    background-color: #f5e6d9;
-    font-family: Arial, sans-serif;
-  
-    /* ค่าที่เพิ่มเข้าไป */
-    height: 100vh; /* ความสูงเท่ากับความสูงของ viewport */
-    width: 100vw; /* ความกว้างเท่ากับความกว้างของ viewport */
-    margin: 0; /* ลบ margin ทั้งหมด */
-    padding: 0; /* ลบ padding ทั้งหมด */
-    position: fixed; /* ตำแหน่งคงที่ */
-    top: 0; /* วางไว้ที่ด้านบนสุด */
-    left: 0; /* วางไว้ที่ด้านซ้ายสุด */
-    z-index: 9999; /* วางไว้ด้านบนสุดของเลเยอร์อื่นๆ */
-  }
+    background-color: #f3e5d5; /* โทนสีครีมอ่อนๆ เหมาะกับคาเฟ่ */
+    font-family: 'Playfair Display', serif; /* ใช้ฟอนต์ที่มีความเป็นคาเฟ่ */
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    
+}
+
+.pagestaff-container h1 {
+    color: #8b4513; /* สีน้ำตาลเข้ม */
+    font-size: 3em;
+    margin-bottom: 20px;
+    font-family: 'Playfair Display', serif; /* ฟอนต์สไตล์คาเฟ่ */
+}
 
 .pagestaff-container .table {
-    width: 100%;
+    width: 90%;
     margin-top: 20px;
-    background-color: white; /* สีขาวสำหรับตาราง */
-    border-radius: 5px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    background-color: #fff8f0; /* สีพื้นหลังตารางนุ่มนวล */
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .pagestaff-container .table-header {
-    background-color: #f2f2f2; /* สีพื้นหลังของ header */
+    background-color: #f5d7aa; /* โทนสีน้ำตาลครีม */
+    color: #8b4513; /* สีน้ำตาลเข้ม */
+    font-weight: bold;
+}
+
+.pagestaff-container .table td, .pagestaff-container .table th {
+    padding: 15px;
+    text-align: center;
+    color: #5a3e1b; /* สีน้ำตาลเข้ม */
 }
 
 .pagestaff-container .table td {
-    padding: 10px;
+    border-bottom: 1px solid #ddd;
 }
 
-.pagestaff-container .error-message {
-    color: red;
-    margin-top: 10px;
+.pagestaff-container .table td button {
+    background-color: #8b4513; /* ปุ่มสีน้ำตาลเข้ม */
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.pagestaff-container .table td button:hover {
+    background-color: #5a3e1b; /* สีเข้มขึ้นเมื่อ hover */
 }
 
 .pagestaff-container .edit-form {
     margin-top: 20px;
-    padding: 15px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    background-color: white; /* สีขาวสำหรับฟอร์มแก้ไข */
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    border: 1px solid #e0cbb3;
+    border-radius: 10px;
+    background-color: #fff8f0;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .pagestaff-container .edit-form label {
-    display: block;
+    font-family: 'Playfair Display', serif;
     margin-bottom: 10px;
+    color: #8b4513;
 }
 
 .pagestaff-container .edit-form input {
     width: 100%;
-    padding: 8px;
+    padding: 10px;
     margin-top: 5px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.pagestaff-container button {
+    background-color: #d2691e; /* ปุ่มสีส้มคล้ายกาแฟ */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.pagestaff-container button:hover {
+    background-color: #8b4513; /* เปลี่ยนเป็นสีน้ำตาลเข้มเมื่อ hover */
+}
+
+.pagestaff-container .error-message {
+    color: #ff6347; /* สีแดงอ่อนสำหรับข้อความผิดพลาด */
+    margin-top: 10px;
 }
