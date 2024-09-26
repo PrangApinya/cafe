@@ -1,6 +1,7 @@
 // นำเข้า sequelize จาก db_instance.js
 const Sequelize = require("sequelize");
 const sequelize = require("../db_instance");
+const Staff = require("./staff_model");
 
 const Check = sequelize.define("check", {
     id: {
@@ -13,7 +14,7 @@ const Check = sequelize.define("check", {
         type: Sequelize.STRING,
         allowNull: false,
         references: {
-            model: "staff",
+            model: Staff,
             key: "rfid",
         }
     },
