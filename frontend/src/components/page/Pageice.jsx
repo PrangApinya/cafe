@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { useNavigate, Link } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import './Page.css'
 import Cafe from '../cafehead/Cafe'
 import axios from 'axios'
@@ -8,7 +8,6 @@ const Pageice = () => {
     const [loading, setLoading] = useState(true);
     const [menus, setMenus] = useState([]);
     const [error, setError] = useState(null);
-    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchData = async () => {
@@ -23,11 +22,7 @@ const Pageice = () => {
         }
         fetchData();
     }, []);
-
-    const handleItemClick = () => {
-        navigate(`/${menu.id}`)
-    }
-
+    
     return (
         <>
             <Cafe />

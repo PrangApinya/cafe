@@ -1,68 +1,60 @@
-import React from 'react'
-import'./Page.css'
+import React, { useState, useEffect } from 'react'
+import { Link } from 'react-router-dom'
+import './Page.css'
 import Cafe from '../cafehead/Cafe'
-import cakec from '../../assets/img/cakec.png'
-import caketea from '../../assets/img/caketea.png'
-import cakes from '../../assets/img/cakes.png'
-import cakem from '../../assets/img/cakem.png'
-
+import axios from 'axios'
 
 const Pagecake = () => {
+    const [loading, setLoading] = useState(true);
+    const [menus, setMenus] = useState([]);
+    const [error, setError] = useState(null);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await axios.get('http://localhost:8085/menus/cake');
+                setMenus(response.data);
+            } catch (error) {
+                setError(error);
+            } finally {
+                setLoading(false);
+            }
+        }
+        fetchData();
+    }, []);
+    
     return (
-        <div>
+        <>
             <Cafe />
-            <div class="box2">
-                <div class="boxcoffee mt-5">
-                    <div class="row">
-                        <div class="col-sm-3 ">
-                            <div class="card ms-5" >
-                                <img src={cakec} class="card-img-top" width="160" height="150" />
-                                <div class="card-body">
-                                    <h4>Chocolate </h4>
-                                    <h5>50THB</h5>
-                                    <button class="btn btn-primary" onclick="window.location.href='#';"><h5>Add menu</h5></button>
+            <div className="box2">
+                <div className="boxcoffee mt-5">
+                    <div className="row">
+                        { loading && <p>Loading...</p> }
+                        { error && <p>Error: {error.message}</p> }
+                        { menus && menus.map((menu, index) => (
+                            <div className="col-sm-3 " key={index}>
+                                <div className="card ms-5" >
+                                    <img src={`/src/assets/img/${menu.filename}`} className="card-img-top" width="170" height="160" />
+                                    <div className="card-body">
+                                        <h4>{menu.name}</h4>
+                                        <h5>{menu.price} THB</h5>
+                                        <Link to={`/${menu.id}`}>
+                                            <button
+                                                className="btn btn-primary"
+                                                data-bs-toggle="modal"
+                                                data-bs-target="#exampleModal"
+                                            >
+                                                Add menu
+                                            </button>
+                                        </Link>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-
-                        <div class="col-sm-3">
-                            <div class="card ms-5" >
-                                <img src={caketea} class="card-img-top" width="160" height="150" />
-                                <div class="card-body">
-                                    <h4>Green Tea </h4>
-                                    <h5>55THB</h5>
-                                    <button class="btn btn-primary" onclick="window.location.href='#';"><h5>Add menu</h5></button>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-sm-3">
-                            <div class="card ms-5" >
-                                <img src={cakes} class="card-img-top" width="170" height="150" />
-                                <div class="card-body">
-                                    <h4>Strawberry </h4>
-                                    <h5>55THB</h5>
-                                    <button class="btn btn-primary" onclick="window.location.href='#';"><h5>Add menu</h5></button>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-sm-3">
-                            <div class="card ms-5 " >
-                                <img src={cakem} class="card-img-top" width="170" height="150" />
-                                <div class="card-body">
-                                    <h4>Macaron</h4>
-                                    <h5>70THB</h5>
-                                    <button class="btn btn-primary" onclick="window.location.href='#';"><h5>Add menu</h5></button>
-                                </div>
-                            </div>
-                        </div>
-
+                        ))}
                     </div>
                 </div>
             </div>
-
-        </div>
+        </>
 
     )
 }
