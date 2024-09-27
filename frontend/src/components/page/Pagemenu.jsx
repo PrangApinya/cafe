@@ -58,7 +58,7 @@ const Pagemenu = () => {
             {loading && <p>Loading...</p>}
             {error && <p>Error: {error.message}</p>}
             {menu && (
-                <div>
+                <div className="container p-5 ">
                     <img src={`/src/assets/img/${menu.filename}`} />
                     <h2>{menu.name}</h2>
                     <p>{menu.type}</p>
