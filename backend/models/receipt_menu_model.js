@@ -1,6 +1,8 @@
 // นำเข้า sequelize จาก db_instance.js
 const Sequelize = require("sequelize");
 const sequelize = require("../db_instance");
+const Receipt = require("./receipt_model");
+const Menu = require("./menu_model");
 
 const ReceiptMenu = sequelize.define("receipt_menu", {
     id: {
@@ -13,7 +15,7 @@ const ReceiptMenu = sequelize.define("receipt_menu", {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
-            model: "receipt",
+            model: Receipt,
             key: "id",
         }
     },
@@ -21,7 +23,7 @@ const ReceiptMenu = sequelize.define("receipt_menu", {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
-            model: "menu",
+            model: Menu,
             key: "id",
         }
     },
