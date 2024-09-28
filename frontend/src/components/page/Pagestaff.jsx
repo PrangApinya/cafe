@@ -137,7 +137,7 @@ const Pagestaff = () => {
   };
 
   const handleLoginClick = () => {
-    navigate('/login');
+    navigate('/');
   };
 
   const toggleAddRow = () => {
@@ -153,7 +153,7 @@ const Pagestaff = () => {
         <button onClick={toggleAddRow}>
           {showAddRow ? 'Cancel' : 'Add New Staff'}
         </button>
-        <button onClick={handleLoginClick}>Go to Login</button>
+        <button onClick={handleLoginClick}>Back</button>
 
         {/* Table for adding new staff */}
         {showAddRow && (
