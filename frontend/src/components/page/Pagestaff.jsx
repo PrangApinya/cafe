@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './Pagestaff.css';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import WebSocketComponent from '../WebSocketComponent';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -32,10 +32,16 @@ const Pagestaff = () => {
 
   const fetchStaffs = async () => {
     try {
-      const response = await axios.get('http://localhost:8085/staffs');
+      const response = await axios.get('http://localhost:8085/staffs',
+        { headers: { "x-access-token": sessionStorage.getItem('token') } }
+      );
       setStaffs(Array.isArray(response.data) ? response.data : []);
     } catch (error) {
-      console.error('Error fetching staff data:', error);
+      if (error.response && error.response.status === 401) {
+        navigate("/"); // Redirect to login page if not authorized
+      } else {
+        console.error('Error fetching staff data:', error);
+      }
     }
   };
 
@@ -62,7 +68,10 @@ const Pagestaff = () => {
     const confirmDelete = window.confirm(`Are you sure you want to delete staff with RFID ${rfid}?`);
     if (confirmDelete) {
       try {
-        await axios.delete('http://localhost:8085/staffs', { data: { staffId: rfid } });
+        await axios.delete('http://localhost:8085/staffs/', {
+          headers: { "x-access-token": sessionStorage.getItem("token") },
+          data: { rfid: rfid }
+        });
         fetchStaffs();
       } catch (error) {
         console.error('Error deleting staff:', error);
@@ -85,11 +94,14 @@ const Pagestaff = () => {
     }
 
     try {
-      await axios.put(`http://localhost:8085/staffs/${editId}`, newData);
+      await axios.put(`http://localhost:8085/staffs/${editId}`, newData,
+        { headers: { "x-access-token": sessionStorage.getItem("token") } }
+      );
       fetchStaffs();
       setEditId(null);
       setError('');
     } catch (error) {
+      console.error(error);
       setError('Failed to update staff');
     }
   };
@@ -102,26 +114,22 @@ const Pagestaff = () => {
     }
 
     try {
-      const response = await axios.post("http://localhost:8085/rfid/check-rfid", { rfid: formState.rfid });
-      if (response.data.exists) {
-        toast.error("RFID นี้ถูกใช้ไปแล้ว กรุณาใช้บัตรอื่น", { autoClose: 1000 });
-        return;
+      const registerResponse = await axios.post("http://localhost:8085/staffs/register", formState,
+        { headers: { "x-access-token": sessionStorage.getItem("token") } }
+      );
+      if (registerResponse.status === 201) {
+        toast.success("ลงทะเบียนสำเร็จ", { autoClose: 1000 });
+        setFormState({
+          rfid: '',
+          firstname: '',
+          lastname: '',
+          password: ''
+        });
+        fetchStaffs();
+        setShowAddRow(false);
+        setIsWebSocketActive(false);
       } else {
-        const registerResponse = await axios.post("http://localhost:8085/staffs/register", formState);
-        if (registerResponse.status === 201) {
-          toast.success("ลงทะเบียนสำเร็จ", { autoClose: 1000 });
-          setFormState({
-            rfid: '',
-            firstname: '',
-            lastname: '',
-            password: ''
-          });
-          fetchStaffs();
-          setShowAddRow(false);
-          setIsWebSocketActive(false);
-        } else {
-          toast.error(`เกิดข้อผิดพลาดในการลงทะเบียน: ${registerResponse.data.message}`, { autoClose: 1000 });
-        }
+        toast.error(`เกิดข้อผิดพลาดในการลงทะเบียน: ${registerResponse.data.message}`, { autoClose: 1000 });
       }
     } catch (error) {
       console.error("Error during RFID check or registration:", error);
@@ -134,10 +142,6 @@ const Pagestaff = () => {
       ...prevState,
       rfid: data
     }));
-  };
-
-  const handleLoginClick = () => {
-    navigate('/login');
   };
 
   const toggleAddRow = () => {
@@ -153,7 +157,7 @@ const Pagestaff = () => {
         <button onClick={toggleAddRow}>
           {showAddRow ? 'Cancel' : 'Add New Staff'}
         </button>
-        <button onClick={handleLoginClick}>Go to Login</button>
+        <Link to="/"><button>Go to Main Page</button></Link>
 
         {/* Table for adding new staff */}
         {showAddRow && (
