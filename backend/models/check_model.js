@@ -16,7 +16,7 @@ const Check = sequelize.define("check", {
         references: {
             model: Staff,
             key: "rfid",
-        }
+        },
     },
     date: {
         type: Sequelize.DATEONLY,

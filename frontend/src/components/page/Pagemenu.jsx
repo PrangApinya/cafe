@@ -24,7 +24,6 @@ const Pagemenu = () => {
             }
         }
         fetchData();
-        console.log(cart);
     }, [menu_id, cart]);
 
     // const updateQuantity = (sign) => {
@@ -49,7 +48,6 @@ const Pagemenu = () => {
 
     const handleAdd = () => {
         addToCart(menu, quantity);
-        console.log("Added to cart");
         navigate("/");
     }
 

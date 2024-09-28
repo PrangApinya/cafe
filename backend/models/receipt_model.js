@@ -14,6 +14,10 @@ const Receipt = sequelize.define("receipt", {
         defaultValue: new Date().getTime(),
         allowNull: false,
     },
+    total_price: {
+        type: Sequelize.FLOAT,
+        allowNull: false,
+    }
 }, {
     // Additional options if needed
     timestamps: false // ปิดการใช้งานฟิลด์ createdAt และ updatedAt

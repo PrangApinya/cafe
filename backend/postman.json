@@ -2,26 +2,78 @@
 	"info": {
 		"_postman_id": "7718dd5a-76c2-40ca-969d-fcbe1c26d805",
 		"name": "CafeBucks",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
 		"_exporter_id": "26984753"
 	},
 	"item": [
 		{
-			"name": "http://localhost:8085/menus",
+			"name": "http://localhost:8085/check/check-in",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"rfid\": 1\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:8085/check/check-in"
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8085/check/:id",
 			"request": {
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8085/menus",
+					"raw": "http://localhost:8085/check/:id",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "8085",
 					"path": [
-						"menus"
+						"check",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": ""
+						}
 					]
 				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8085/menus/hot",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "http://localhost:8085/menus/hot"
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8085/menus/ice",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "http://localhost:8085/menus/ice"
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8085/menus/cake",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "http://localhost:8085/menus/cake"
 			},
 			"response": []
 		},
@@ -52,77 +104,89 @@
 			"response": []
 		},
 		{
-			"name": "http://localhost:8085/orders",
+			"name": "http://localhost:8085/order",
 			"request": {
 				"method": "POST",
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"menuId\": 1,\r\n    \"sweetLevel\": 100,\r\n    \"topping\": \"\"\r\n}",
+					"raw": "{\r\n    \"menus\": [\r\n        {\r\n            \"menu_id\": 5,\r\n            \"quantity\": 1,\r\n            \"price\": 50.00\r\n        },\r\n        {\r\n            \"menu_id\": 12,\r\n            \"quantity\": 2,\r\n            \"price\": 140.00\r\n        },\r\n        {\r\n            \"menu_id\": 7,\r\n            \"quantity\": 1,\r\n            \"price\": 50.00\r\n        }\r\n    ]\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
 						}
 					}
 				},
-				"url": {
-					"raw": "http://localhost:8085/orders",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8085",
-					"path": [
-						"orders"
-					]
-				}
+				"url": "http://localhost:8085/order"
 			},
 			"response": []
 		},
 		{
-			"name": "http://localhost:8085/receipts",
+			"name": "http://localhost:8085/receipts/best-seller",
 			"request": {
 				"method": "GET",
 				"header": [],
-				"url": {
-					"raw": "http://localhost:8085/receipts",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8085",
-					"path": [
-						"receipts"
-					]
-				}
+				"url": "http://localhost:8085/receipts/best-seller"
 			},
 			"response": []
 		},
 		{
-			"name": "http://localhost:8085/staffs",
+			"name": "http://localhost:8085/receipts/sales-today",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "http://localhost:8085/receipts/sales-today"
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8085/receipts/sales-this-month",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "http://localhost:8085/receipts/sales-this-month"
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8085/rfid/check-rfid",
 			"request": {
 				"method": "POST",
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"firstname\": \"\",\r\n    \"lastname\": \"\",\r\n    \"password\": \"\"\r\n}",
+					"raw": "{\r\n    \"rfid\": \"D5A7ACAC\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
 						}
 					}
 				},
-				"url": {
-					"raw": "http://localhost:8085/staffs",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8085",
-					"path": [
-						"staffs"
-					]
-				}
+				"url": "http://localhost:8085/rfid/check-rfid"
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8085/staffs/register",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "x-access-token",
+						"value": "",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"rfid\": \"\",\r\n    \"firstname\": \"\",\r\n    \"lastname\": \"\",\r\n    \"password\": \"\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:8085/staffs/register"
 			},
 			"response": []
 		},
@@ -130,10 +194,43 @@
 			"name": "http://localhost:8085/staffs",
 			"request": {
 				"method": "DELETE",
+				"header": [
+					{
+						"key": "x-access-token",
+						"value": "",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"rfid\": 5\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:8085/staffs"
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8085/staffs/today",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "http://localhost:8085/staffs/today"
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8085/staffs/:rfid",
+			"request": {
+				"method": "PUT",
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"id\": 1,\r\n    \"staffId\": 5\r\n}",
+					"raw": "{\r\n    \"firstname\": \"dekchai\",\r\n    \"lastname\": \"pluto\",\r\n    \"password\": \"11111111\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -141,14 +238,21 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8085/staffs",
+					"raw": "http://localhost:8085/staffs/:rfid",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "8085",
 					"path": [
-						"staffs"
+						"staffs",
+						":rfid"
+					],
+					"variable": [
+						{
+							"key": "rfid",
+							"value": ""
+						}
 					]
 				}
 			},
@@ -159,45 +263,7 @@
 			"request": {
 				"method": "GET",
 				"header": [],
-				"url": {
-					"raw": "http://localhost:8085/staffs",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8085",
-					"path": [
-						"staffs"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "http://localhost:8085/check",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"id\": 1\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "http://localhost:8085/check",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8085",
-					"path": [
-						"check"
-					]
-				}
+				"url": "http://localhost:8085/staffs"
 			},
 			"response": []
 		}
