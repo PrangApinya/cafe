@@ -20,9 +20,9 @@ router.post("/check-rfid", async (req, res) => {
         const staff = await Staff.findOne({ where: { rfid } });
 
         if (staff) {
-            return res.status(400).json({ message: "Staff exists", exists: true });
+            return res.status(200).json({ message: "Staff exists", exists: true });
         } else {
-            return res.status(200).json({ message: "Staff doesn't exist", exists: false });
+            return res.status(400).json({ message: "Staff doesn't exist", exists: false });
         }
     } catch (error) {
         console.error("Error checking RFID:", error);

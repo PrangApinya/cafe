@@ -1,8 +1,9 @@
 const express = require("express");
 const router = express.Router();
-const Receipt = require("../models/receipt_model");
-const ReceiptMenu = require("../models/receipt_menu_model");
+const { Receipt, Menu, ReceiptMenu } = require("../models/associations");
 const { Sequelize, Op } = require("sequelize");
+const sqlite = require("sqlite3");
+const db = new sqlite.Database("./database.db");
 
 // Retrieve 6 most popular menus
 router.get("/best-seller", async (req, res) => {
@@ -14,8 +15,23 @@ router.get("/best-seller", async (req, res) => {
             ],
             group: ["menu_id"],
             order: [[Sequelize.fn("sum", Sequelize.col("quantity")), "DESC"]],
-            limit: 6
+            limit: 6,
+            include: {
+                model: Menu,
+                attributes: ["name", "type"],
+                required: true
+            }
         });
+
+        // const bestSeller = db.all(
+        //     `SELECT receipt_menus.menu_id, menus.name, SUM(receipt_menus.quantity) AS total_quantity
+        //     FROM receipt_menus INNER JOIN menus ON receipt_menus.menu_id = menus.id 
+        //     GROUP BY receipt_menus.menu_id ORDER BY total_quantity DESC LIMIT 6`, (err, rows) => {
+        //     if (err) {
+        //         return err;
+        //     }
+        //     return rows;
+        // });
 
         return res.status(200).json(bestSeller);
     } catch(err) {
