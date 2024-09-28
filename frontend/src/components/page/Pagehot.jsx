@@ -39,7 +39,7 @@ const Pagehot = () => {
                                         <h4>{menu.name}</h4>
                                         <h5>{menu.price} THB</h5>
                                         <Link to={`/${menu.id}`}>
-                                            <button
+                                            <button 
                                                 className="btn btn-primary"
                                                 data-bs-toggle="modal"
                                                 data-bs-target="#exampleModal"

@@ -28,18 +28,26 @@ const Pagecast = () => {
       <Cafe />
       <div className="box2">
         <div className="boxcast">
-          <p>My Cart</p>
-          <p>สินค้าในตะกร้า: {cart.length}</p>
+          <h3>My Cart</h3>
+          <h3>เมนูในตะกร้า: {cart.length}</h3>
         </div>
         <div className="cast-items">
           {cart.map((item) => (
-            <div className="cast-item" key={item.id}>
-              <img className="item-image" src={`/src/assets/img/${item.filename}`} alt={item.filename} />
-              <h3 className="item-name">{item.name}</h3>
-              <button className="quantity-button" onClick={() => decreaseQuantity(item.id)}>-</button>
-              <p className="item-quantity">{item.quantity}</p>
-              <button className="quantity-button" onClick={() => increaseQuantity(item.id)}>+</button>
-              <button className="remove-button" onClick={() => removeFromCart(item.id)}>Remove</button>
+            <div className="container p-2 my-3 border " key={item.id}>
+              <div class="d-flex justify-content gap-5">
+              <img className="item-image" src={`/src/assets/img/${item.filename}`} alt={item.filename} style={{ width: "90px", height: "auto" }} />
+              <h3 className="item-name m-2" style={{ fontSize: "1.5rem" }}>{item.name}</h3>  
+              
+              <div className="d-flex gap-3" >                         
+              <button className="btn btn-outline-secondary quantity-button" onClick={() => decreaseQuantity(item.id)}>-</button>
+              <p className="item-quantity m-0">{item.quantity}</p>
+              <button className="btn btn-outline-secondary quantity-button" onClick={() => increaseQuantity(item.id)}>+</button>     
+              </div>   
+            
+              <button className="btn btn-danger remove-button" onClick={() => removeFromCart(item.id)}><p class="fs-5">Remove</p></button>
+              </div>
+              
+              
             </div>
           ))}
         </div>

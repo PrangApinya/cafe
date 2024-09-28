@@ -34,8 +34,9 @@ const Pageice = () => {
                         { menus && menus.map((menu, index) => (
                             <div className="col-sm-3 " key={index}>
                                 <div className="card ms-5" >
+                                <img src={`/src/assets/img/${menu.filename}`} className="card-img-top"  height="150" />
                                     <div className="card-body">
-                                        <h4>{menu.name}</h4>
+                                        <h4>{menu.name}</h4>                      
                                         <h5>{menu.price} THB</h5>
                                         <Link to={`/${menu.id}`}>
                                             <button
