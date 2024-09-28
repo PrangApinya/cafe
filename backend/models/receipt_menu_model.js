@@ -31,7 +31,7 @@ const ReceiptMenu = sequelize.define("receipt_menu", {
         type: Sequelize.INTEGER,
         allowNull: false,
     },
-    price: {
+    total_price: {
         type: Sequelize.FLOAT,
         allowNull: false,
     },
