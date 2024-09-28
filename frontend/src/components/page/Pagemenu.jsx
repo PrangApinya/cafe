@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { useCart } from '../context/Cart'
 import axios from 'axios'
+import './Page.css'
 
 const Pagemenu = () => {
     const { menu_id } = useParams();
@@ -56,16 +57,21 @@ const Pagemenu = () => {
             {loading && <p>Loading...</p>}
             {error && <p>Error: {error.message}</p>}
             {menu && (
-                <div>
-                    <img src={`/src/assets/img/${menu.filename}`} />
-                    <h2>{menu.name}</h2>
-                    <p>{menu.type}</p>
-                    <p>{menu.price} THB</p>
-                    <button onClick={decrement}>-</button>
-                    <p>{quantity}</p>
-                    <button onClick={increment}>+</button>
-                    <button onClick={handleAdd}>Add to cart</button>
-                </div>
+                
+                    <div className="container p-5  col text-center">
+                        <img src={`/src/assets/img/${menu.filename}`} />
+                        <p class="fs-1">{menu.name}</p>
+                        <p class="fs-2">{menu.type}</p>
+                        <p class="fs-4">{menu.price} THB</p>
+                        <div class="d-flex justify-content-center gap-3" >
+                        <button onClick={decrement}>-</button>
+                        <p class="fs-5">{quantity}</p>
+                        <button onClick={increment}>+</button>
+                        </div>
+                        <br/>
+                        <button class="btn btn-secondary rounded-pill" onClick={handleAdd}><p class="fs-5">Add to cart</p></button>
+                    </div>
+                
             )}
         </>
     )
