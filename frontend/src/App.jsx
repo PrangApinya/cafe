@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 import Pagehot from './components/page/Pagehot';
@@ -20,8 +19,9 @@ function App() {
   return (
     <Router>
       <Routes>
+        <Route path="/login" element={<Login />} />
         <Route path="/" element={<Pagehot />} />
-        <Route path='/home' element={<Home />} /> 
+        <Route path="/home" element={<Home />} />
         <Route path="/ice" element={<Pageice />} />
         <Route path="/cake" element={<Pagecake />} />
         <Route path="/:menu_id" element={<Pagemenu />} />
@@ -33,7 +33,6 @@ function App() {
         <Route path="/attendance" element={<PageAttendance/>} />
       </Routes>
     </Router>
-
   )
 }
 

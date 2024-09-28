@@ -29,8 +29,8 @@ const Home = () => {
 
   return (
     <header>
-    <WebSocketComponent onDataReceived={handleRfidData} />
-
+      <WebSocketComponent onDataReceived={handleRfidData} />
+      <h1>Scan your RFID</h1>
     </header>
   );
 };
