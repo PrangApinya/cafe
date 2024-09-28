@@ -1,24 +1,23 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useCart } from '../context/Cart';
 import './Pagecast.css';
 import Cafe from '../cafehead/Cafe';
 import axios from 'axios';
 
 const Pagecast = () => {
-  const { cart, removeFromCart, increaseQuantity, decreaseQuantity } = useCart();
-
-  useEffect(() => {
-    console.log('Cart:', cart);
-  }, [cart]);
+  const { cart, removeFromCart, increaseQuantity, decreaseQuantity, getCartTotal, clearCart } = useCart();
 
   // ฟังก์ชันสั่งการ Buzzer ผ่าน API
   const handlePurchase = async () => {
     try {
+      await axios.post("http://localhost:8085/order", { menus: cart, totalPrice: getCartTotal() });
+      clearCart(); // ล้างตะกร้าสินค้าหลังจากสั่งซื้อสำเร็จ
+
       // เรียก API ที่ไปสั่งการ Raspberry Pi
       await axios.get('http://localhost:8085/buzzer/buzzer'); // แก้ URL ให้ตรงกับ API ที่เรียกไฟล์ Python บน Raspberry Pi
       alert('สั่งซื้อสำเร็จและสั่ง Buzzer เรียบร้อยแล้ว!');
     } catch (error) {
-      console.error('Error triggering buzzer:', error);
+      console.error('Error: ', error);
       alert('เกิดข้อผิดพลาดในการสั่ง Buzzer');
     }
   };
@@ -51,6 +50,7 @@ const Pagecast = () => {
             </div>
           ))}
         </div>
+        <p>Total: {getCartTotal()} THB</p>
         <button onClick={handlePurchase}>ซื้อสินค้า</button> {/* กดปุ่มเพื่อสั่ง buzzer */}
       </div>
     </div>

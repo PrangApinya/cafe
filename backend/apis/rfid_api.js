@@ -1,20 +1,8 @@
 const express = require("express");
 const router = express.Router();
-const Staff = require("../models/staff_model");
+const { Staff } = require("../models/associations");
 
-router.post("/", (req, res) => {
-    const rfidData = req.body.rfidData;
-    const timestamp = new Date();
-
-    if (!rfidData) {
-        return res.status(400).json({ success: false, message: "RFID data is required" });
-    }
-
-    console.log("Received RFID Data: ", rfidData, "at", timestamp);
-
-    res.json({ success: true, message: "RFID data received successfully", data: { rfid: rfidData, timestamp } });
-});
-
+// Check if RFID exists in the database
 router.post("/check-rfid", async (req, res) => {
     try {
         const { rfid } = req.body;
@@ -32,13 +20,13 @@ router.post("/check-rfid", async (req, res) => {
         const staff = await Staff.findOne({ where: { rfid } });
 
         if (staff) {
-            return res.status(200).json({ exists: true });
+            return res.status(200).json({ message: "Staff exists", exists: true });
         } else {
-            return res.status(200).json({ exists: false });
+            return res.status(400).json({ message: "Staff doesn't exist", exists: false });
         }
     } catch (error) {
         console.error("Error checking RFID:", error);
-        return res.status(500).json({ message: "Internal server error" });
+        return res.status(500).json({ message: "Something went wrong" });
     }
 });
 

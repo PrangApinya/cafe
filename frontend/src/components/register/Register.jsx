@@ -4,7 +4,7 @@ import './Register.css'
 import { useNavigate } from 'react-router-dom';
 import Axios from 'axios';
 import WebSocketComponent from '../WebSocketComponent';
-import { toast, ToastContainer } from 'react-toastify';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 const Register = () => {
@@ -47,13 +47,20 @@ const Register = () => {
                     toast.error("RFID นี้ถูกใช้ไปแล้ว กรุณาใช้บัตรอื่น", { autoClose: 1000 });
                     return;
                 } else {
-                    Axios.post("http://localhost:8085/staffs/register", formState)
+                    Axios.post("http://localhost:8085/staffs/register", formState, { headers: { "x-access-token": sessionStorage.getItem("token") } })
                         .then(response => {
                             if (response.status !== 201) {
                                 toast.error(`เกิดข้อผิดพลาดในการลงทะเบียน: ${response.data.message}`, { autoClose: 1000 });
                                 return;
                             }
                             toast.success("ลงทะเบียนสำเร็จ", { autoClose: 1000 });
+                            setFormState({
+                                rfid: '',
+                                firstname: '',  
+                                lastname: '',   
+                                password: ''
+                            });
+                            navigate("/");
                         })
                         .catch(error => {
                             console.error("Error during registration:", error.response?.data || error.message);

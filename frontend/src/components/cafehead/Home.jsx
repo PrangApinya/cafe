@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Home.css';
 import WebSocketComponent from '../WebSocketComponent';
@@ -29,8 +29,8 @@ const Home = () => {
 
   return (
     <header>
-    <WebSocketComponent onDataReceived={handleRfidData} />
-
+      <WebSocketComponent onDataReceived={handleRfidData} />
+      <h1>Scan your RFID</h1>
     </header>
   );
 };

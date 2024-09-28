@@ -1,18 +1,8 @@
 const express = require("express");
 const router = express.Router();
-const Menu = require("../models/menu_model");
+const { Menu } = require("../models/associations");
 
-// Retrieve all menus from the database
-router.get("/", async (req, res) => {
-    try {
-        const menus = await Menu.findAll();
-
-        return res.status(200).json(menus);
-    } catch(err) {
-        return res.status(500).json({ message: "Something went wrong"});
-    }
-});
-
+// Retreive hot menus
 router.get("/hot", async (req, res) => {
     try {
         const menus = await Menu.findAll({
@@ -28,6 +18,7 @@ router.get("/hot", async (req, res) => {
     }
 });
 
+// Retreive iced menus
 router.get("/ice", async (req, res) => {
     try {
         const menus = await Menu.findAll({
@@ -43,6 +34,7 @@ router.get("/ice", async (req, res) => {
     }
 });
 
+// Retreive cake menus
 router.get("/cake", async (req, res) => {
     try {
         const menus = await Menu.findAll({

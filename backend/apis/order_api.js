@@ -3,18 +3,18 @@ const path = require("path");
 const express = require("express");
 const easyinvoice = require("easyinvoice");
 const router = express.Router();
-const Receipt = require("../models/receipt_model");
-const ReceiptMenu = require("../models/receipt_menu_model");
+const { Receipt, ReceiptMenu } = require("../models/associations");
 
 // Order from cart
 router.post("/", async (req, res) => {
     try {
-        const { menus } = req.body;
+        const { menus, totalPrice } = req.body;
         const timestamp = new Date().getTime();
 
         const receipt = await Receipt.create(
             {
-                timestamp: timestamp
+                timestamp: timestamp,
+                total_price: totalPrice
             }
         );
         receipt.save();
@@ -22,9 +22,9 @@ router.post("/", async (req, res) => {
         await ReceiptMenu.bulkCreate(menus.map(menu => {
             return {
                 receipt_id: receipt.dataValues.id,
-                menu_id: menu.menu_id,
+                menu_id: menu.id,
                 quantity: menu.quantity,
-                price: menu.price
+                total_price: menu.price * menu.quantity
             }
         }));
         
@@ -45,7 +45,7 @@ router.post("/", async (req, res) => {
             },
             products: menus.map(menu => {
                 return {
-                    description: menu.name,
+                    description: `${menu.name} (${menu.type})`,
                     quantity: menu.quantity,
                     price: menu.price
                 }
