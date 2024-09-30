@@ -1,0 +1,85 @@
+.dashboard-header {
+    position: absolute; /* Allows positioning */
+    top: 10px; /* Adjust as needed */
+    left: 10px; /* Adjust as needed */
+}
+
+.home-button {
+    padding: 15px 30px ; /* Add padding */
+    background-color: #e5b986; /* Button color */
+    color: white; /* Text color */
+    text-decoration: none; /* Remove underline */
+    border-radius: 5px; /* Rounded corners */
+    transition: background-color 0.3s; /* Transition for hover effect */
+}
+
+.home-button:hover {
+    background-color: #0056b3; /* Darker color on hover */
+}
+
+
+.dashboard {
+    display: flex;
+    padding: 20px;
+    background-color: #f3e5dc;
+    font-family: 'Courier New', monospace;
+    min-height: 100vh;
+}
+
+.dashboard-left {
+    flex: 2;
+    padding-right: 20px;
+}
+
+.dashboard-right {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.section-title {
+    font-size: 24px;
+    color: #6b4226;
+    text-align: center;
+    margin-bottom: 15px;
+    font-family: 'Pacifico', cursive; /* ฟอนต์แนวคาเฟ่ */
+}
+
+.best-seller, .daily-sales, .monthly-sales {
+    background-color: #fffaf1;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.best-seller-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.best-seller-item {
+    display: flex;
+    justify-content: space-between;
+    background-color: #f5e3c7;
+    padding: 10px;
+    border-radius: 8px;
+}
+
+.best-seller-name {
+    font-size: 18px;
+    color: #4e342e;
+}
+
+.best-seller-amount {
+    font-size: 18px;
+    color: #d32f2f;
+}
+
+.sales-amount {
+    font-size: 28px;
+    color: #6b4226;
+    text-align: center;
+    margin-top: 10px;
+}

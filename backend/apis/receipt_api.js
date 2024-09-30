@@ -40,16 +40,18 @@ router.get("/best-seller", async (req, res) => {
     }
 });
 
-// Retrieve total sales in the current day
+// Retrieve total sales in the current day along with quantities sold
 router.get("/sales-today", async (req, res) => {
     try {
         const currentDay = new Date();
         currentDay.setHours(0, 0, 0, 0);
         const timestamp = currentDay.getTime();
 
+        // Retrieve total sales
         const salesToday = await Receipt.findOne({
             attributes: [
-                [Sequelize.fn("count", Sequelize.col("id")), "total_sales"]
+                [Sequelize.fn("count", Sequelize.col("id")), "total_sales"],
+                [Sequelize.fn("sum", Sequelize.col("total_price")), "total_price"]
             ],
             where: {
                 timestamp: {
@@ -59,27 +61,45 @@ router.get("/sales-today", async (req, res) => {
             }
         });
 
-        // const sales = await Receipt.findAll({
-        //     attributes: ["timestamp"],
-        //     where: {
-        //         timestamp: {
-        //             [Op.gte]: timestamp,
-        //             [Op.lt]: timestamp + 86400000
-        //         }
-        //     }
-        // });
-        // const salesToday = sales.filter((sale) => {
-        //     return sale.timestamp.toISOString().split('T')[0] === timestamp.toISOString().split('T')[0]
-        // });
+        // Retrieve quantities sold for each menu
+        const quantitiesToday = await ReceiptMenu.findAll({
+            attributes: [
+                "menu_id",
+                [Sequelize.fn("sum", Sequelize.col("quantity")), "total_quantity"],
+            ],
+            include: {
+                model: Menu,
+                attributes: ["name"],
+                required: true,
+            },
+            where: {
+                '$Receipt.timestamp$': {
+                    [Op.gte]: timestamp,
+                    [Op.lt]: timestamp + 86400000,
+                },
+            },
+            include: [
+                {
+                    model: Receipt,
+                    attributes: [],
+                },
+                {
+                    model: Menu,
+                    attributes: ["name"],
+                },
+            ],
+            group: ["menu_id"],
+            order: [[Sequelize.fn("sum", Sequelize.col("quantity")), "DESC"]],
+        });
 
-        return res.status(200).json(salesToday);
-    } catch(err) {
+        return res.status(200).json({ salesToday, quantitiesToday });
+    } catch (err) {
         console.error(err);
         return res.status(500).json({ message: "Something went wrong" });
     }
 });
 
-// Retrieve total sales in the current month
+// Retrieve total sales in the current month along with quantities sold
 router.get("/sales-this-month", async (req, res) => {
     try {
         const currentMonth = new Date();
@@ -87,35 +107,56 @@ router.get("/sales-this-month", async (req, res) => {
         currentMonth.setHours(0, 0, 0, 0);
         const timestamp = currentMonth.getTime();
 
+        // Retrieve total sales
         const salesThisMonth = await Receipt.findOne({
             attributes: [
-                [Sequelize.fn("count", Sequelize.col("id")), "total_sales"]
+                [Sequelize.fn("count", Sequelize.col("id")), "total_sales"],
+                [Sequelize.fn("sum", Sequelize.col("total_price")), "total_price"]
             ],
             where: {
                 timestamp: {
                     [Op.gte]: timestamp,
-                    [Op.lt]: timestamp + 2678400000
+                    [Op.lt]: timestamp + 2678400000, // จำนวน ms ของเดือนที่สั้นที่สุด (31 วัน)
                 }
             }
         });
 
-        // const sales = await Receipt.findAll({
-        //     attributes: ["timestamp"],
-        //     where: {
-        //         timestamp: {
-        //             [Op.gte]: timestamp,
-        //             [Op.lt]: timestamp + 2678400000
-        //         }
-        //     }
-        // });
-        // const salesThisMonth = sales.filter((sale) => {
-        //     return sale.timestamp.toISOString().split('T')[0].substring(0, 7) === timestamp.toISOString().split('T')[0].substring(0, 7)
-        // });
+        // Retrieve quantities sold for each menu
+        const quantitiesThisMonth = await ReceiptMenu.findAll({
+            attributes: [
+                "menu_id",
+                [Sequelize.fn("sum", Sequelize.col("quantity")), "total_quantity"],
+            ],
+            include: {
+                model: Menu,
+                attributes: ["name"],
+                required: true,
+            },
+            where: {
+                '$Receipt.timestamp$': {
+                    [Op.gte]: timestamp,
+                    [Op.lt]: timestamp + 2678400000,
+                },
+            },
+            include: [
+                {
+                    model: Receipt,
+                    attributes: [],
+                },
+                {
+                    model: Menu,
+                    attributes: ["name"],
+                },
+            ],
+            group: ["menu_id"],
+            order: [[Sequelize.fn("sum", Sequelize.col("quantity")), "DESC"]],
+        });
 
-        return res.status(200).json(salesThisMonth);
-    } catch(err) {
+        return res.status(200).json({ salesThisMonth, quantitiesThisMonth });
+    } catch (err) {
         console.error(err);
         return res.status(500).json({ message: "Something went wrong" });
     }
 });
+
 module.exports = router
