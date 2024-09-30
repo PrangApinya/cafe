@@ -37,7 +37,8 @@ const ReceiptMenu = sequelize.define("receipt_menu", {
     },
 }, {
     // Additional options if needed
-    timestamps: false // ปิดการใช้งานฟิลด์ createdAt และ updatedAt
+    
+    timestamps: true // ปิดการใช้งานฟิลด์ createdAt และ updatedAt
 });
 
 (async () => {

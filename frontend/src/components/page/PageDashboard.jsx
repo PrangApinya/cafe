@@ -1,99 +1,107 @@
-import React from 'react';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { BarChart, Bar, XAxis, YAxis, Tooltip, CartesianGrid, Legend } from 'recharts';
 import axios from 'axios';
 
-const BestSeller = () => {
-    const [data, setData] = useState([]);
-    const [error, setError] = useState(null);
-
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const response = await axios.get("http://localhost:8085/receipts/best-seller");
-                setData(response.data);
-            } catch(err) {
-                setError(err.message);
-            }
-        }
-        fetchData();
-    }, []);
-
-    return (
-        <div className="best-seller">
-            {error ? error : data.map((item) => (
-                <h3 key={item.menu_id} className="best-seller-item">
-                    <p className="best-seller-name">{item.menu.name} ({item.menu.type})</p>
-                    <p className="best-seller-amount">{item.total_quantity}</p> {/* amount is the number of times the menu is ordered */}
-                </h3>
-            ))}
-        </div>
-    )
-}
-
-const DailySales = () => {
-    const [data, setData] = useState();
-    const [error, setError] = useState(null);
-    const [loading, setLoading] = useState(true);
-
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const response = await axios.get("http://localhost:8085/receipts/sales-today");
-                setData(response.data);
-            } catch(err) {
-                setError(err.message);
-            } finally {
-                setLoading(false);
-            }
-        }
-        fetchData();
-    }, []);
-
-    return (
-        <div className="daily-sales">
-            <h3 className="daily-sales-title">Daily Sales</h3>
-            <h3 className="daily-sales-value">{error ? error : (loading ? "Loading..." : data.total_sales)}</h3>
-        </div>
-    )
-}
-
-const MonthlySales = () => {
-    const [data, setData] = useState();
-    const [error, setError] = useState(null);
-    const [loading, setLoading] = useState(true);
-
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const response = await axios.get("http://localhost:8085/receipts/sales-this-month");
-                setData(response.data);
-            } catch(err) {
-                setError(err.message);
-            } finally {
-                setLoading(false);
-            }
-        }
-        fetchData();
-    }, []);
-
-    return (
-        <div className="monthly-sales">
-            <h3 className="monthly-sales-title">Monthly Sales</h3>
-            <h3 className="monthly-sales-value">{error ? error : (loading ? "Loading" : data.total_sales)}</h3>
-        </div>
-    )
-}
-
 const PageDashboard = () => {
+    const [topMenuSales, setTopMenuSales] = useState([]);
+    const [dailySales, setDailySales] = useState([]);
+    const [monthlySales, setMonthlySales] = useState([]);
+
+    // Helper function to format date
+    const formatDate = (dateString) => {
+        const options = { year: 'numeric', month: 'short', day: 'numeric' };
+        return new Date(dateString).toLocaleDateString(undefined, options);
+    };
+
+    // Fetch top menu sales
+    const fetchTopMenuSales = async () => {
+        try {
+            const response = await axios.get('http://localhost:8085/receipts/top-menu-sales');
+            // Ensure the data fits Recharts format
+            const formattedData = response.data.map(item => ({
+                ...item,
+                'menu.name': item.menu.name, // Flatten the nested object for the chart
+            }));
+            setTopMenuSales(formattedData);
+        } catch (error) {
+            console.error('Error fetching top menu sales:', error);
+        }
+    };
+
+    // Fetch daily sales data
+    const fetchDailySales = async () => {
+        try {
+            const response = await axios.get('http://localhost:8085/receipts/daily-sales');
+            // Format the sale_date to a readable string
+            const formattedData = response.data.map(item => ({
+                ...item,
+                sale_date: formatDate(item.sale_date), // Format the date for better readability
+            }));
+            setDailySales(formattedData);
+        } catch (error) {
+            console.error('Error fetching daily sales:', error);
+        }
+    };
+
+    // Fetch monthly sales data
+    const fetchMonthlySales = async () => {
+        try {
+            const response = await axios.get('http://localhost:8085/receipts/monthly-sales');
+            // Format the sale_month (if needed)
+            const formattedData = response.data.map(item => ({
+                ...item,
+                sale_month: new Date(item.sale_month).toLocaleString('default', { month: 'long', year: 'numeric' }), // Formatting month to readable format
+            }));
+            setMonthlySales(formattedData);
+        } catch (error) {
+            console.error('Error fetching monthly sales:', error);
+        }
+    };
+
+    useEffect(() => {
+        fetchTopMenuSales();
+        fetchDailySales();
+        fetchMonthlySales();
+    }, []);
+
     return (
-        <div className="dashboard">
-            <BestSeller />
-            <div className="dashboard-sales">
-                <DailySales />
-                <MonthlySales />
-            </div>
+        <div>
+            <h1>Dashboard</h1>
+            
+            {/* Top Menu Sales Chart */}
+            <h2>Top Menu Sales</h2>
+            <BarChart width={600} height={300} data={topMenuSales}>
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis dataKey="menu.name" /> {/* Adjust to match the data structure */}
+                <YAxis />
+                <Tooltip />
+                <Legend />
+                <Bar dataKey="total_quantity" fill="#8884d8" />
+            </BarChart>
+
+            {/* Daily Sales Chart */}
+            <h2>Daily Sales</h2>
+            <BarChart width={600} height={300} data={dailySales}>
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis dataKey="sale_date" /> {/* Adjust to match formatted date */}
+                <YAxis />
+                <Tooltip />
+                <Legend />
+                <Bar dataKey="total_quantity" fill="#82ca9d" />
+            </BarChart>
+
+            {/* Monthly Sales Chart */}
+            <h2>Monthly Sales</h2>
+            <BarChart width={600} height={300} data={monthlySales}>
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis dataKey="sale_month" /> {/* Adjust to match formatted month */}
+                <YAxis />
+                <Tooltip />
+                <Legend />
+                <Bar dataKey="total_quantity" fill="#ffc658" />
+            </BarChart>
         </div>
-    )
-}
+    );
+};
 
 export default PageDashboard;
