@@ -1,10 +1,9 @@
 const express = require('express');
 const { Op, fn, col } = require('sequelize');
-const ReceiptMenu = require('../models/receipt_menu_model'); // นำเข้า ReceiptMenu model
-const Menu = require('../models/menu_model'); // นำเข้า Menu model
+const { Receipt, Menu, ReceiptMenu } = require("../models/associations");
 const router = express.Router();
 
-// 1. ดึงข้อมูลยอดขายมากสุด 6 เมนู
+// 6menu (best seller)
 router.get('/top-menu-sales', async (req, res) => {
     try {
         const topMenus = await ReceiptMenu.findAll({
@@ -17,9 +16,9 @@ router.get('/top-menu-sales', async (req, res) => {
             limit: 6,
             include: [{
                 model: Menu,
-                attributes: ['name']
+                attributes: ['name', 'type'] // Ensure we are fetching both name and type
             }],
-            order: [[fn('SUM', col('total_price')), 'DESC']] // เรียงลำดับตามยอดขาย
+            order: [[fn('SUM', col('total_price')), 'DESC']] // Sort by sales
         });
         res.json(topMenus);
     } catch (error) {
@@ -31,19 +30,27 @@ router.get('/top-menu-sales', async (req, res) => {
 // 2. ดึงข้อมูลเมนูทั้งหมดรายวัน
 router.get('/daily-sales', async (req, res) => {
     try {
+        const currentDay = new Date();
+        currentDay.setHours(0, 0, 0, 0);
+        const timestamp = currentDay.getTime();
+        
         const dailySales = await ReceiptMenu.findAll({
             attributes: [
                 'menu_id',
                 [fn('SUM', col('quantity')), 'total_quantity'],
                 [fn('SUM', col('total_price')), 'total_price'],
-                [fn('DATE', col('createdAt')), 'sale_date'] // ใช้สร้างข้อมูลวันที่
             ],
-            group: ['menu_id', fn('DATE', col('createdAt'))],
-            include: [{
-                model: Menu,
-                attributes: ['name']
-            }]
+            group: ['menu_id'],
+            include: [
+                {
+                    model: Menu,
+                    attributes: ['name','type'],
+                },
+            ],
+            order: [[fn('SUM', col('total_price')), 'DESC']]
+
         });
+        
         res.json(dailySales);
     } catch (error) {
         console.error(error);
@@ -52,6 +59,7 @@ router.get('/daily-sales', async (req, res) => {
 });
 
 // 3. ดึงข้อมูลเมนูทั้งหมดรายเดือน
+/*
 router.get('/monthly-sales', async (req, res) => {
     try {
         const monthlySales = await ReceiptMenu.findAll({
@@ -73,5 +81,5 @@ router.get('/monthly-sales', async (req, res) => {
         res.status(500).json({ error: 'เกิดข้อผิดพลาดในการดึงข้อมูล' });
     }
 });
-
+*/
 module.exports = router;
