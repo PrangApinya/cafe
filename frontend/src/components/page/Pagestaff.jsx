@@ -245,7 +245,7 @@ const Pagestaff = () => {
             )}
           </tbody>
         </table>
-
+        
         {editId && (
           <div className="edit-form">
             <h3>Edit Staff</h3>
