@@ -90,7 +90,7 @@ const Login = () => {
       <div className="login-cafe-buck">CafeBuck</div>
       <form onSubmit={handleSubmit} className="login-form">
         <div>
-          <label htmlFor="rfid">RFID:</label>
+          <label htmlFor="rfid"><b>RFID:</b></label>
           <input 
             type="text" 
             id="rfid" 

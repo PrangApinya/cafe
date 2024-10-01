@@ -3,6 +3,32 @@ const express = require("express");
 const jwt = require("jsonwebtoken");
 const router = express.Router();
 const { Check } = require("../models/associations");
+const { Op } = require('sequelize');
+
+// count staff for the current day
+router.get("/staff-count", async (req, res) => {
+  try {
+    const today = new Date();
+    const startOfDay = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+    const endOfDay = new Date(today.getFullYear(), today.getMonth(), today.getDate() + 1);
+
+    const count = await Check.count({
+      distinct: true,
+      col: 'staff_id', // คัดกรองเพื่อให้ไม่ซ้ำ
+      where: {
+        datetime: {
+          [Op.between]: [startOfDay, endOfDay] // เงื่อนไขนับเฉพาะในวันปัจจุบัน
+        }
+      }
+    });
+
+    return res.status(200).json({ count });
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ message: "Something went wrong" });
+  }
+});
+
 
 // Staff Checking
 router.post("/check-in", async (req, res) => {

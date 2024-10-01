@@ -28,13 +28,13 @@ const Pagecast = () => {
       <div className="box2">
         <div className="boxcast">
           <h3>My Cart</h3>
-          <h3>View Cart: {cart.length}</h3>
+          <h3>เมนูในตะกร้า: {cart.length}</h3>
         </div>
         <div className="cast-items">
           {cart.map((item) => (
             <div className="container p-2 my-3 border " key={item.id}>
-              <div class="d-flex justify-content gap-">
-              <img className="item-image" src={`/src/assets/img/${item.filename}`} alt={item.filename} style={{ width: "150px", height: "auto" }} />
+              <div class="d-flex justify-content gap-5">
+              <img className="item-image" src={`/src/assets/img/${item.filename}`} alt={item.filename} style={{ width: "90px", height: "auto" }} />
               <h3 className="item-name m-2" style={{ fontSize: "1.5rem" }}>{item.name}</h3>  
               
               <div className="d-flex gap-3" >                         
@@ -49,11 +49,9 @@ const Pagecast = () => {
               
             </div>
           ))}
-        </div >
-        <div className="container p-5  col text-center">
-        <p class="fs-3">Total: <b>{getCartTotal()} THB</b></p>
-        <button class="btn btn-success rounded-pill" style={{ width: '75%' }}  onClick={handlePurchase}><p class="fs-3"><u><b>Buy Now!</b></u></p></button> {/* กดปุ่มเพื่อสั่ง buzzer */}
         </div>
+        <p>Total: {getCartTotal()} THB</p>
+        <button onClick={handlePurchase}>ซื้อสินค้า</button> {/* กดปุ่มเพื่อสั่ง buzzer */}
       </div>
     </div>
   );
