@@ -51,13 +51,11 @@ const Pagemenu = () => {
         addToCart(menu, quantity);
         navigate("/");
     }
-
     return (
         <>
             {loading && <p>Loading...</p>}
             {error && <p>Error: {error.message}</p>}
-            {menu && (
-                
+            {menu && (               
                     <div className="container p-5  col text-center">
                         <img src={`/src/assets/img/${menu.filename}`} />
                         <p class="fs-1">{menu.name}</p>
@@ -70,11 +68,9 @@ const Pagemenu = () => {
                         </div>
                         <br/>
                         <button class="btn btn-secondary rounded-pill" onClick={handleAdd}><p class="fs-5">Add to cart</p></button>
-                    </div>
-                
+                    </div>               
             )}
-        </>
+       </>
     )
 }
-
 export default Pagemenu;

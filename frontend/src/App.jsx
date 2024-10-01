@@ -9,19 +9,17 @@ import Pagecast from './components/page/Pagecast';
 import PageDashboard from './components/page/PageDashboard';
 
 import Register from './components/register/Register';
-import Home from './components/cafehead/Home';
 import Login from './components/login/Login';
 import Pagestaff from './components/page/Pagestaff';
 import PageAttendance from './components/page/PageAttendance';
 
 function App() {
-
   return (
     <Router>
       <Routes>
         <Route path="/login" element={<Login />} />
         <Route path="/" element={<Pagehot />} />
-        <Route path="/home" element={<Home />} />
+
         <Route path="/ice" element={<Pageice />} />
         <Route path="/cake" element={<Pagecake />} />
         <Route path="/:menu_id" element={<Pagemenu />} />
@@ -35,5 +33,4 @@ function App() {
     </Router>
   )
 }
-
 export default App
