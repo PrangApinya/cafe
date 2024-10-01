@@ -55,8 +55,6 @@ const Pageice = () => {
                 </div>
             </div>
         </>
-
     )
 }
-
 export default Pageice

@@ -21,8 +21,7 @@ const Pagecake = () => {
             }
         }
         fetchData();
-    }, []);
-    
+    }, []);     
     return (
         <>
             <Cafe />
@@ -55,8 +54,6 @@ const Pagecake = () => {
                 </div>
             </div>
         </>
-
     )
 }
-
 export default Pagecake

@@ -55,8 +55,6 @@ const Pagehot = () => {
                 </div>
             </div>
         </>
-
     )
 }
-
 export default Pagehot
