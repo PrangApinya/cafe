@@ -4,6 +4,7 @@ import './Pagecast.css';
 import Cafe from '../cafehead/Cafe';
 import axios from 'axios';
 
+// The component to displays and manipulates menus in the cart
 const Pagecast = () => {
   const { cart, removeFromCart, increaseQuantity, decreaseQuantity, getCartTotal, clearCart } = useCart();
 

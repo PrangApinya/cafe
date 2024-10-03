@@ -5,6 +5,7 @@ export const CartContext = createContext();
 
 export const useCart = () => useContext(CartContext);
 
+// The provider component to wrap the application with shopping cart context
 export const CartProvider = ({ children }) => {
     const [cart, setCart] = useState(localStorage.getItem("cart") ? JSON.parse(localStorage.getItem("cart")) : []);
 

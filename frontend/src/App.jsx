@@ -13,6 +13,7 @@ import Login from './components/login/Login';
 import Pagestaff from './components/page/Pagestaff';
 import PageAttendance from './components/page/PageAttendance';
 
+// Application component to handle routing to different pages in the website
 function App() {
   return (
     <Router>

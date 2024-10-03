@@ -7,6 +7,7 @@ import WebSocketComponent from '../WebSocketComponent';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
+// The component to handle the registration of a new staff member
 const Register = () => {
     const navigate = useNavigate();
 

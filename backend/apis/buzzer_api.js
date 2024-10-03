@@ -2,6 +2,7 @@ const express = require('express');
 const { exec } = require('child_process');
 const router = express.Router();
 
+// API to trigger buzzer after an order using Python script
 router.get('/buzzer', (req, res) => {
   exec('python3 /home/watchaphon/cafe/backend/buzzer_control.py on', (error, stdout, stderr) => {
     if (error) {

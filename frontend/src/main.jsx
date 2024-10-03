@@ -5,6 +5,7 @@ import { CartProvider } from './components/context/Cart.jsx'
 import { AuthProvider } from './components/context/Auth.jsx'
 import './index.css'
 
+// Render React components to the DOM
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <AuthProvider>

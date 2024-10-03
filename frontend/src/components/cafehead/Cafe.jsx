@@ -14,6 +14,8 @@ const openNav = () => {
 const closeNav = () => {
   document.getElementById("myNav").style.display = "none";
 };
+
+// The component for the sidebar and the navigation bar
 const Cafe = () => {
   const { isAuthenticated, logout } = useAuth();
 

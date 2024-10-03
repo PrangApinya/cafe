@@ -6,6 +6,7 @@ import WebSocketComponent from '../WebSocketComponent';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
+// The component to display and manipulate staffs in the database
 const Pagestaff = () => {
   const [staffs, setStaffs] = useState([]);
   const [editId, setEditId] = useState(null);

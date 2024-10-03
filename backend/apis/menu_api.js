@@ -14,6 +14,7 @@ router.get("/hot", async (req, res) => {
 
         return res.status(200).json(menus);
     } catch(err) {
+        console.error(err);
         return res.status(500).json({ message: "Something went wrong"});
     }
 });
@@ -30,6 +31,7 @@ router.get("/ice", async (req, res) => {
 
         return res.status(200).json(menus);
     } catch(err) {
+        console.error(err);
         return res.status(500).json({ message: "Something went wrong"});
     }
 });
@@ -46,6 +48,7 @@ router.get("/cake", async (req, res) => {
 
         return res.status(200).json(menus);
     } catch(err) {
+        console.error(err);
         return res.status(500).json({ message: "Something went wrong"});
     }
 });
@@ -56,6 +59,7 @@ router.get("/:id", async (req, res) => {
         const id = req.params.id;
 
         const menu = await Menu.findOne({
+            attributes: ["name", "price", "type", "filename"],
             where: {
                 id: id
             }
@@ -63,6 +67,7 @@ router.get("/:id", async (req, res) => {
 
         return res.status(200).json(menu);
     } catch(err) {
+        console.error(err);
         return res.status(500).json({ message: "Something went wrong" });
     }
 });

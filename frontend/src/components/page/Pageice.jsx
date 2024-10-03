@@ -4,6 +4,7 @@ import './Page.css'
 import Cafe from '../cafehead/Cafe'
 import axios from 'axios'
 
+// The component to display the iced menus
 const Pageice = () => {
     const [loading, setLoading] = useState(true);
     const [menus, setMenus] = useState([]);

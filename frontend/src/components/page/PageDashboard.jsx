@@ -3,6 +3,7 @@ import { BarChart, Bar, XAxis, YAxis, Tooltip, CartesianGrid, Legend, PieChart, 
 import axios from 'axios';
 import './PageDashboard.css'; // Import a CSS file for styling
 
+// The dashboard component to visualize data about sales
 const PageDashboard = () => {
     const [topMenuSales, setTopMenuSales] = useState([]);
     const [dailySales, setDailySales] = useState([]);
