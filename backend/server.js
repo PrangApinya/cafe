@@ -13,7 +13,7 @@ const admin = require("./middlewares/admin");
 // Server's API endpoints
 app.use("/rfid", require("./apis/rfid_api")); //เรียก ค่า rfid จาก nodered
 app.use("/menus", require("./apis/menu_api"));
-app.use("/staffs", /*admin,*/ require("./apis/staff_api"));
+app.use("/staffs", admin, require("./apis/staff_api"));
 app.use("/order", require("./apis/order_api"));
 app.use("/receipts", require("./apis/receipt_api"));
 app.use("/check", require("./apis/check_api"));
