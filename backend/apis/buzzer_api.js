@@ -16,7 +16,7 @@ router.get('/buzzer', (req, res) => {
 
 module.exports = router;
 
-/*
+
 app.get('/api/buzzer', (req, res) => {
     exec('python3 /home/watchaphon/cafe/backend/buzzer_control.py on', (error, stdout, stderr) => {
       if (error) {
@@ -26,4 +26,4 @@ app.get('/api/buzzer', (req, res) => {
       res.send('Buzzer triggered successfully');
     });
   });
-*/
+

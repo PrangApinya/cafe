@@ -29,7 +29,7 @@ const Pagecast = () => {
       <div className="box2">
         <div className="boxcast">
           <h3>My Cart</h3>
-          <h3>เมนูในตะกร้า: {cart.length}</h3>
+          <h3>Manu in cart: {cart.length}</h3>
         </div>
         <div className="cast-items">
           {cart.map((item) => (
@@ -44,15 +44,17 @@ const Pagecast = () => {
               <button className="btn btn-outline-secondary quantity-button" onClick={() => increaseQuantity(item.id)}>+</button>     
               </div>   
             
-              <button className="btn btn-danger remove-button" onClick={() => removeFromCart(item.id)}><p class="fs-5">Remove</p></button>
+              <button class= "btn btn-danger"   onClick={() => removeFromCart(item.id)}><p class="fs-5">Remove</p></button>
               </div>
               
               
             </div>
           ))}
         </div>
-        <p>Total: {getCartTotal()} THB</p>
-        <button onClick={handlePurchase}>ซื้อสินค้า</button> {/* กดปุ่มเพื่อสั่ง buzzer */}
+        <div className="container p-5  col text-center">
+        <p> Total: <b>{getCartTotal()} THB</b></p>
+        <button class="btn btn-success rounded-pill" style={{width:'75%'}} onClick={handlePurchase}><u><b>Buy Now</b></u></button> {/* กดปุ่มเพื่อสั่ง buzzer */}
+        </div>
       </div>
     </div>
   );
