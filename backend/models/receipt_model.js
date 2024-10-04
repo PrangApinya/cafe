@@ -2,6 +2,7 @@
 const Sequelize = require("sequelize");
 const sequelize = require("../db_instance");
 
+// Define a model for table "receipts"
 const Receipt = sequelize.define("receipt", {
     id: {
         type: Sequelize.INTEGER,

@@ -6,19 +6,24 @@
 
 - [x]  API Specification
 - [ ]  Setup Environment for Raspberry Pi
-- [ ]  Docker Compose
+- [x]  Docker Compose + Docker Volume
 - [x]  SQLite Setup
-- [ ]  RFID with WebSocket
+- [x]  RFID with WebSocket
 - [ ]  Order’s Receipt PDF File
-- [ ]  Date Querying for Staffs and Orders Checking
-- [ ]  Shopping Cart System Using React
+- [x]  Date Querying for Staffs and Orders Checking
+- [x]  Shopping Cart System Using React
+- [x]  Fix Authentication Mechanism
+- [x]  Staffs Manipulation
+- [x]  Display Sales Data
+- [x]  Commenting
+- [x]  Website’s Icon + Title
 
 ### Description
 
 ---
 
 - There’s gonna have 2 roles (staff and admin)
-- ~~We have to use admin authorization to access staffs checking page.~~
+- We have to use admin authorization to access staffs checking page.
 - Tee said he wants RFID authorization for admin access.
 - Donny will be checking on shopping cart system and dashboard (frontend).
 - We’ll use PDF file for saving order’s receipt.

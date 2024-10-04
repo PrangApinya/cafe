@@ -5,6 +5,7 @@ import axios from 'axios';
 import WebSocketComponent from '../WebSocketComponent';
 import './Login.css';
 
+// The component for the staff to login
 const Login = () => {
   const navigate = useNavigate();
   const [rfid, setRfid] = useState('');

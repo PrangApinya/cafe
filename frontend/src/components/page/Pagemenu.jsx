@@ -4,6 +4,7 @@ import { useCart } from '../context/Cart'
 import axios from 'axios'
 import './Page.css'
 
+// The component to display the specific menu
 const Pagemenu = () => {
     const { menu_id } = useParams();
     const [menu, setMenu] = useState(null);

@@ -6,6 +6,7 @@ import WebSocketComponent from '../WebSocketComponent';
 import { Link, useLocation } from 'react-router-dom'; // Import Link here
 import './PageAttendance.css';
 
+// The component for checking attendance records of a staff
 const PageAttendance = () => {
   const location = useLocation();
   const { rfid } = location.state || {};

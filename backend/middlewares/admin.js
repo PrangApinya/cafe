@@ -2,6 +2,7 @@ require("dotenv").config();
 const jwt = require("jsonwebtoken");
 const Staff = require("../models/staff_model");
 
+// Middleware to authorize admin access
 async function admin(req, res, next) {
     const token = req.headers["x-access-token"];
     try {

@@ -11,6 +11,7 @@ router.post("/", async (req, res) => {
         const { menus, totalPrice } = req.body;
         const timestamp = new Date().getTime();
 
+        // Save an order record to the database
         const receipt = await Receipt.create(
             {
                 timestamp: timestamp,
@@ -18,7 +19,8 @@ router.post("/", async (req, res) => {
             }
         );
         receipt.save();
-
+        
+        // Save each record of the ordered menu to the database
         await ReceiptMenu.bulkCreate(menus.map(menu => {
             return {
                 receipt_id: receipt.dataValues.id,
@@ -27,7 +29,8 @@ router.post("/", async (req, res) => {
                 total_price: menu.price * menu.quantity
             }
         }));
-        
+
+        // Generate a PDF of receipt by the data provided
         const imgPath = path.resolve("receipts", "logo.png");
 
         const invoiceData = {

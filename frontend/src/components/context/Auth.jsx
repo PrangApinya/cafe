@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 const AuthContext = createContext(null);
 
+// The provider component to wrap the application with authentication context
 export const AuthProvider = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 

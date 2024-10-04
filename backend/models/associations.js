@@ -4,7 +4,7 @@ const Receipt = require("./receipt_model.js");
 const ReceiptMenu = require("./receipt_menu_model.js");
 const Staff = require("./staff_model.js");
 
-// Define associations
+// Define associations between models
 Check.belongsTo(Staff, {
     foreignKey: "staff_id",
     sourceKey: "rfid",

@@ -3,6 +3,7 @@ const Sequelize = require("sequelize");
 const sequelize = require("../db_instance");
 const Staff = require("./staff_model");
 
+// Define a model for table "checks"
 const Check = sequelize.define("check", {
     id: {
         type: Sequelize.INTEGER,

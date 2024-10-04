@@ -2,6 +2,7 @@
 const Sequelize = require("sequelize");
 const sequelize = require("../db_instance");
 
+// Define a model for table "staffs"
 const Staff = sequelize.define("staff", {
     rfid: {
         type: Sequelize.STRING,
@@ -32,6 +33,5 @@ const Staff = sequelize.define("staff", {
 (async () => {
     await Staff.sync({ force: false });
 })();
-
 
 module.exports = Staff;
