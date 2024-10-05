@@ -59,7 +59,6 @@ router.get("/:id", async (req, res) => {
         const id = req.params.id;
 
         const menu = await Menu.findOne({
-            attributes: ["name", "price", "type", "filename"],
             where: {
                 id: id
             }
