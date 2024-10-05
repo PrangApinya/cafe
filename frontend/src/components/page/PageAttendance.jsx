@@ -76,7 +76,7 @@ const PageAttendance = () => {
   return (
     <div className='attenbackground'>
       {/* Wrap the button with Link */}
-      <Link to="/staff">
+      <Link to="/">
         <button>Back</button>
       </Link>
       <div className="attendance-container">
