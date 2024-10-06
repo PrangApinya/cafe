@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { BarChart, Bar, XAxis, YAxis, Tooltip, CartesianGrid, Legend, PieChart, Pie, Cell } from 'recharts';
 import axios from 'axios';
 import './PageDashboard.css'; // Import a CSS file for styling
@@ -69,6 +70,9 @@ const PageDashboard = () => {
 
     return (
         <div className="dashboard-container">
+            <Link to="/">
+                <button>Back</button>
+            </Link>
             <h1>Dashboard</h1>
 
             {/* Top Menu Sales Bar Chart */}
