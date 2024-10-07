@@ -48,8 +48,10 @@ const PageDashboard = () => {
         try {
             const response = await axios.get('http://localhost:8085/receipts/monthly-sales');
             const formattedData = response.data.map(item => ({
-                ...item,
-                sale_month: new Date(item.sale_month).toLocaleString('default', { month: 'long', year: 'numeric' }),
+                menuName: item.menu.name,
+                menuType: item.menu.type,
+                total_quantity: item.total_quantity,
+                total_price: item.total_price
             }));
             setMonthlySales(formattedData);
         } catch (error) {
@@ -65,6 +67,9 @@ const PageDashboard = () => {
 
     // Custom label for daily sales to display menu name, type, quantity, and total price
     const renderDailySalesLabel = ({ menuName, menuType, total_quantity, total_price }) => {
+        return `${menuName} (${menuType}) : ${total_quantity} items ($${total_price.toFixed(2)})`;
+    };
+    const renderMonthlySalesLabel = ({ menuName, menuType, total_quantity, total_price }) => {
         return `${menuName} (${menuType}) : ${total_quantity} items ($${total_price.toFixed(2)})`;
     };
 
@@ -113,7 +118,7 @@ const PageDashboard = () => {
             {/* Monthly Sales Pie Chart */}
             <h2>Monthly Sales</h2>
             <div className="chart-container">
-                <PieChart width={600} height={300}>
+                <PieChart width={800} height={300}>
                     <Pie
                         data={monthlySales}
                         dataKey="total_quantity"
@@ -122,7 +127,7 @@ const PageDashboard = () => {
                         cy="50%"
                         outerRadius={100}
                         fill="#82ca9d"
-                        label
+                        label={renderMonthlySalesLabel}
                     >
                         {monthlySales.map((entry, index) => (
                             <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
