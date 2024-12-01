@@ -3,35 +3,35 @@ const path = require("path");
 const express = require("express");
 const easyinvoice = require("easyinvoice");
 const router = express.Router();
-const { Receipt, ReceiptMenu } = require("../models/associations");
+const { Orderdetail, Orderinvoice } = require("../models/associations");
 
 // Order from cart
 router.post("/", async (req, res) => {
     try {
-        const { menus, totalPrice } = req.body;
-        const timestamp = new Date().getTime();
+        const { items, totalPrice, totalPoints } = req.body; // รับข้อมูลจาก body ของคำขอ
+        const timestamp = new Date(); // ใช้ timestamp ปัจจุบัน
 
-        // Save an order record to the database
-        const receipt = await Receipt.create(
-            {
-                timestamp: timestamp,
-                total_price: totalPrice
-            }
-        );
-        receipt.save();
-        
-        // Save each record of the ordered menu to the database
-        await ReceiptMenu.bulkCreate(menus.map(menu => {
-            return {
-                receipt_id: receipt.dataValues.id,
-                menu_id: menu.id,
-                quantity: menu.quantity,
-                total_price: menu.price * menu.quantity
-            }
+        // Save an order detail record to the database
+        const orderDetail = await Orderdetail.create({
+            timestamp: timestamp,
+            total_price: totalPrice,
+            total_point: totalPoints
+        });
+
+        // Save each record of the ordered items to the database
+        await Promise.all(items.map(item => {
+            return Orderinvoice.create({
+                Orderdetail_id: orderDetail.id,
+                membership_id: null, // คุณสามารถเพิ่มการอ้างอิงถึงสมาชิกได้ที่นี่
+                user_id: null, // คุณสามารถเพิ่มการอ้างอิงถึงผู้ใช้ได้ที่นี่
+                menu_id: item.menu_id,
+                quantity: item.quantity,
+                total_price: item.price * item.quantity
+            });
         }));
 
-        // Generate a PDF of receipt by the data provided
-        const imgPath = path.resolve("receipts", "logo.png");
+        // Generate a PDF of the receipt
+        const imgPath = path.resolve("receipts", "logo.png"); // เส้นทางไปยังโลโก้
 
         const invoiceData = {
             apiKey: "free",
@@ -43,14 +43,14 @@ router.post("/", async (req, res) => {
                 company: "CafeBucks",
             },
             information: {
-                number: receipt.dataValues.id,
-                date: receipt.dataValues.timestamp.toISOString().split("T")[0]
+                number: orderDetail.id,
+                date: timestamp.toISOString().split("T")[0] // แปลงวันที่เป็นรูปแบบที่ต้องการ
             },
-            products: menus.map(menu => {
+            products: items.map(item => {
                 return {
-                    description: `${menu.name} (${menu.type})`,
-                    quantity: menu.quantity,
-                    price: menu.price
+                    description: `${item.name} (${item.type})`,
+                    quantity: item.quantity,
+                    price: item.price
                 }
             }),
             bottomNotice: "THANK YOU",
@@ -65,13 +65,13 @@ router.post("/", async (req, res) => {
         };
 
         const result = await easyinvoice.createInvoice(invoiceData);
-        fs.writeFileSync(path.resolve("receipts", `receipt-${receipt.dataValues.id}.pdf`), result.pdf, "base64");
+        fs.writeFileSync(path.resolve("receipts", `receipt-${orderDetail.id}.pdf`), result.pdf, "base64");
 
-        return res.status(201).json({ message: "The order is successful"});
+        return res.status(201).json({ message: "The order is successful" });
     } catch(err) {
         console.error(err);
         return res.status(500).json({ message: "Something went wrong" });
     }
-})
+});
 
-module.exports = router
+module.exports = router;
