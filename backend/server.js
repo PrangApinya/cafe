@@ -19,6 +19,7 @@ app.use("/receipts", require("./apis/receipt_api"));
 app.use("/check", require("./apis/check_api"));
 app.use("/buzzer",require("./apis/buzzer_api"));
 
+
 // Server runs on port 8085
 app.listen(8085, () => {
     console.log("Backend is running...");
