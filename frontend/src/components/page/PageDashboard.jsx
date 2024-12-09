@@ -78,7 +78,7 @@ const PageDashboard = () => {
     return (
         <div className="dashboard-container">
             <Link to="/">
-                <button>Back</button>
+                <img className='back-icon' src="/src/assets/icon/arrow_back_icon.png" alt="back" />
             </Link>
             <h1>Dashboard</h1>
 

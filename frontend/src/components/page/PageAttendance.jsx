@@ -77,7 +77,7 @@ const PageAttendance = () => {
     <div className='attenbackground'>
       {/* Wrap the button with Link */}
       <Link to="/">
-        <button>Back</button>
+        <img className='back-icon' src="/src/assets/icon/arrow_back_icon.png" alt="back" />
       </Link>
       <div className="attendance-container">
         <h1 className="pageh1">Check</h1>
