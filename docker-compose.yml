@@ -1,6 +1,8 @@
 services:
   frontend:
-    build: ./frontend
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
     container_name: frontend_container
     ports:
       - "8080:5173"
@@ -8,7 +10,9 @@ services:
     tty: true
 
   backend:
-    build: ./backend
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
     container_name: backend_container
     ports:
       - "8085:8085"
