@@ -15,7 +15,7 @@ const Pagecast = () => {
       clearCart(); // ล้างตะกร้าสินค้าหลังจากสั่งซื้อสำเร็จ
 
       // เรียก API ที่ไปสั่งการ Raspberry Pi
-      await axios.get('http://localhost:8085/buzzer/buzzer'); // แก้ URL ให้ตรงกับ API ที่เรียกไฟล์ Python บน Raspberry Pi
+      //await axios.get('http://localhost:8085/buzzer/buzzer'); // แก้ URL ให้ตรงกับ API ที่เรียกไฟล์ Python บน Raspberry Pi
       alert('สั่งซื้อสำเร็จและสั่ง Buzzer เรียบร้อยแล้ว!');
     } catch (error) {
       console.error('Error: ', error);
