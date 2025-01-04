@@ -32,8 +32,8 @@ const Pagehot = () => {
                         { loading && <p>Loading...</p> }
                         { error && <p>Error: {error.message}</p> }
                         { menus && menus.map((menu, index) => (
-                            <div className="col-sm-3 " key={index}>
-                                <div className="card ms-5" >
+                            <div className="col-sm-1 " key={index}>
+                                <div className="card ms-3" >
                                     <img src={`/src/assets/img/${menu.filename}`} className="card-img-top" width="170" height="160" />
                                     <div className="card-body">
                                         <h4>{menu.name}</h4>
