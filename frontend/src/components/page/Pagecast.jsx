@@ -33,18 +33,44 @@ const Pagecast = () => {
         </div>
         <div className="cast-items">
           {cart.map((item) => (
-            <div className="container p-2 my-3 border " key={item.id}>
-              <div class="d-flex justify-content gap-5">
-              <img className="item-image" src={`/src/assets/img/${item.filename}`} alt={item.filename} style={{ width: "90px", height: "auto" }} />
-              <h3 className="item-name m-2" style={{ fontSize: "1.5rem" }}>{item.name}</h3>  
-              <div className="d-flex gap-3" >                         
-              <button className="btn btn-outline-secondary quantity-button" onClick={() => decreaseQuantity(item.id)}>-</button>
-              <p className="item-quantity m-0">{item.quantity}</p>
-              <button className="btn btn-outline-secondary quantity-button" onClick={() => increaseQuantity(item.id)}>+</button>     
-              </div>   
-              <button class= "btn btn-danger"   onClick={() => removeFromCart(item.id)}><p class="fs-5">Remove</p></button>
-              </div>       
+            <div className="container p-2 my-3 border" key={item.id}>
+            <div className="d-flex justify-content-between align-items-center">
+              <div className="flex-shrink-0" style={{ width: "15%" }}>
+                <img
+                  className="item-image"
+                  src={`/src/assets/img/${item.filename}`}
+                  alt={item.filename}
+                  style={{ width: "100%", height: "auto" }}
+                />
+              </div>
+              <div className="flex-grow-1 text-center" style={{ width: "35%" }}>
+                <h3 className="item-name m-2" style={{ fontSize: "1.5rem" }}>
+                  {item.name}
+                </h3>
+              </div>
+              <div className="d-flex justify-content-center align-items-center" style={{ width: "25%" }}>
+                <button
+                  className="btn btn-outline-secondary quantity-button"
+                  onClick={() => decreaseQuantity(item.id)}
+                >
+                  -
+                </button>
+                <p className="item-quantity mx-2 my-0">{item.quantity}</p>
+                <button
+                  className="btn btn-outline-secondary quantity-button"
+                  onClick={() => increaseQuantity(item.id)}
+                >
+                  +
+                </button>
+              </div>
+              <div className="flex-shrink-0 text-center" style={{ width: "15%" }}>
+                <button className="btn btn-danger" onClick={() => removeFromCart(item.id)}>
+                  <p className="fs-5">Remove</p>
+                </button>
+              </div>
             </div>
+          </div>
+          
           ))}
         </div>
         <div className="container p-5  col text-center">
