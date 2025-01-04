@@ -17,7 +17,7 @@ app.use("/staffs", admin, require("./apis/staff_api"));
 app.use("/order", require("./apis/order_api"));
 app.use("/receipts", require("./apis/receipt_api"));
 app.use("/check", require("./apis/check_api"));
-app.use("/buzzer",require("./apis/buzzer_api"));
+//app.use("/buzzer",require("./apis/buzzer_api"));
 
 
 // Server runs on port 8085

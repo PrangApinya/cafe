@@ -2,7 +2,6 @@ const express = require('express');
 const { Op, fn, col } = require('sequelize');
 const { Receipt, Menu, ReceiptMenu } = require("../models/associations");
 const router = express.Router();
-
 // 6menu (best seller)
 router.get('/top-menu-sales', async (req, res) => {
     try {

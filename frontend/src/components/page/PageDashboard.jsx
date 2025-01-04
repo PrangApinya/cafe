@@ -9,10 +9,7 @@ const PageDashboard = () => {
     const [topMenuSales, setTopMenuSales] = useState([]);
     const [dailySales, setDailySales] = useState([]);
     const [monthlySales, setMonthlySales] = useState([]);
-
-
     const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#AF19FF', '#FF4560'];
-
     // Fetch top menu sales
     const fetchTopMenuSales = async () => {
         try {
@@ -27,7 +24,6 @@ const PageDashboard = () => {
             console.error('Error fetching top menu sales:', error);
         }
     };
-
     // Fetch daily sales data
     const fetchDailySales = async () => {
         try {
