@@ -1,0 +1,39 @@
+Staff Entity's Attributes
+- rfid
+- firstname
+- lastname
+- password
+- is_admin
+
+Check Entity's Attributes
+- id
+- staff_id
+- date
+- datetime
+
+Receipt Entity's Attributes
+- id
+- timestamp
+- total_price
+
+Menu Entity's Attributes
+- id
+- name
+- price
+- type
+- filename
+
+ReceiptMenu Entity's Attributes
+- id
+- receipt_id
+- menu_id
+- quantity
+- total_price
+
+One staff can have many checks
+One receipt can have many menus
+One check belongs to a staff
+A menu can have many orders
+
+Entity ของ Staff ประกอบด้วย Attributes: rfid, firstname, lastname, password, is_admin Entity ของ Check ประกอบด้วย Attributes: id, staff_id, date, datetime Entity ของ Receipt ประกอบด้วย Attributes: id, timestamp, total_price Entity ของ Menu ประกอบด้วย Attributes: id, name, price, type, filename Entity ของ ReceiptMenu ประกอบด้วย Attributes: id, receipt_id, menu_id, quantity, total_price 1 Staff มีได้หลาย Checks, 1 Receipt มีได้หลาย Menus, 1 Check ขึ้นกับ 1 Staff, 1 Menu มีได้หลาย Orders
+
